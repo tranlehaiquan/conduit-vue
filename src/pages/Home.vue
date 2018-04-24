@@ -70,10 +70,10 @@ export default {
   },
   computed: {
     articles () {
-      return this.$store.state.articles
+      return this.$store.state.home.articles
     },
     tags () {
-      return this.$store.state.tags
+      return this.$store.state.home.tags
     }
   }
 }

@@ -63,6 +63,12 @@ export const TagsService = {
 
 export const HomeArticles = {
   get () {
-    return ApiService.get('articles')
+    return ApiService.get('articles', slug)
+  }
+}
+
+export const Article = {
+  get () {
+
   }
 }
