@@ -1,20 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import home from '@/store/modules/home'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    articles: [],
-    tags: []
+  },
+  actions: {
   },
   mutations: {
-    getMultipleArticle (state, articles) {
-      state.articles = articles
-    },
-    getHomeTags (state, tags) {
-      state.tags = tags
-    }
+  },
+  modules: {
+    home
   }
 })
 

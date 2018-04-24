@@ -23,12 +23,12 @@
           </ul>
         </div>
 
-        <article-preview
-          v-for="(article, index) in articles"
-          :key="article.slug + index"
-          :article="article"
-        >
-        </article-preview>
+          <article-preview
+            v-for="(article, index) in articles"
+            :key="article.slug + index"
+            :article="article"
+          >
+          </article-preview>
 
       </div>
 
@@ -55,8 +55,8 @@
 </div>
 </template>
 <script>
-import ApiService from '@/api'
 import ArticlePreview from '@/components/ArticlePreview.vue'
+import {FETCH_TAGS, FETCH_ARTICLES} from '@/store/actions.type'
 export default {
   components: {
     ArticlePreview
@@ -65,15 +65,8 @@ export default {
     return {}
   },
   created () {
-    ApiService.get('articles')
-      .then(({data}) => {
-        this.$store.commit('getMultipleArticle', data.articles)
-      })
-
-    ApiService.get('tags')
-      .then(({data}) => {
-        this.$store.commit('getHomeTags', data.tags)
-      })
+    this.$store.dispatch(FETCH_TAGS)
+    this.$store.dispatch(FETCH_ARTICLES)
   },
   computed: {
     articles () {
