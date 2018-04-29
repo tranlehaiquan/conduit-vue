@@ -10,6 +10,10 @@ It has already had one project in [here](https://github.com/gothinkster/vue-real
 - [API](https://github.com/gothinkster/realworld/tree/master/api) spec
 - [Routing Guidelines](https://github.com/gothinkster/realworld/tree/master/spec#routing-guidelines)
 
+## Todo
+
+- Research about loader state
+
 ## Build Setup
 
 ``` bash

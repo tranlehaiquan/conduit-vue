@@ -4,16 +4,19 @@ import {
 } from '@/api'
 import {
   FETCH_TAGS,
-  FETCH_ARTICLES
+  FETCH_ARTICLES,
+  START_FETCH_ARTICLES
 } from '@/store/actions.type'
 import {
   SET_TAGS,
-  SET_ARTICLES
+  SET_ARTICLES,
+  SET_ARTICLES_LOADING
 } from '@/store/mutations.type'
 
 const state = {
   articles: [],
-  tags: []
+  tags: [],
+  articlesIsLoading: false
 }
 
 const actions = {
@@ -23,8 +26,9 @@ const actions = {
         context.commit(SET_TAGS, data.tags)
       })
   },
-  [FETCH_ARTICLES] (context) {
-    HomeArticles.get()
+  [FETCH_ARTICLES] (context, slug) {
+    context.commit(START_FETCH_ARTICLES)
+    HomeArticles.get(slug)
       .then(({data}) => {
         context.commit(SET_ARTICLES, data.articles)
       })
@@ -37,6 +41,9 @@ const mutations = {
   },
   [SET_ARTICLES] (state, playload) {
     state.articles = playload
+  },
+  [SET_ARTICLES_LOADING] (state, isloading) {
+    state.articlesIsLoading = isloading
   }
 }
 
