@@ -4,8 +4,7 @@ import {
 } from '@/api'
 import {
   FETCH_TAGS,
-  FETCH_ARTICLES,
-  START_FETCH_ARTICLES
+  FETCH_ARTICLES
 } from '@/store/actions.type'
 import {
   SET_TAGS,
@@ -27,7 +26,6 @@ const actions = {
       })
   },
   [FETCH_ARTICLES] (context, slug) {
-    context.commit(START_FETCH_ARTICLES)
     HomeArticles.get(slug)
       .then(({data}) => {
         context.commit(SET_ARTICLES, data.articles)

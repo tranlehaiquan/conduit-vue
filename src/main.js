@@ -9,11 +9,14 @@ import store from '@/store'
 Vue.config.productionTip = false
 ApiService.init()
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  store,
-  router,
-  components: { App },
-  template: '<App/>'
-})
+store.dispatch('CHECK_AUTH')
+  .then(() => {
+    /* eslint-disable no-new */
+    new Vue({
+      el: '#app',
+      store,
+      router,
+      components: { App },
+      template: '<App/>'
+    })
+  })

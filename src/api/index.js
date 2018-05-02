@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-// import JwtService from '@/common/jwt.service'
+import {getJWTFromStorage} from '@/api/localStorage'
 import { API_URL } from '@/api/config'
 
 // Source code from https://github.com/gothinkster/vue-realworld-example-app
@@ -11,9 +11,9 @@ const ApiService = {
     Vue.axios.defaults.baseURL = API_URL
   },
 
-  // setHeader () {
-  //   Vue.axios.defaults.headers.common['Authorization'] = `Token ${JwtService.getToken()}`
-  // },
+  setHeader () {
+    Vue.axios.defaults.headers.common['Authorization'] = `Token ${getJWTFromStorage()}`
+  },
 
   query (resource, params) {
     return Vue.axios
@@ -71,4 +71,22 @@ export const Article = {
   get () {
 
   }
+}
+
+export const Auth = {
+  login (user) {
+    return ApiService.post('users/login', user)
+  },
+  register (user) {
+    return ApiService.post('users', user)
+  },
+  get () {
+    return ApiService.get('user')
+  },
+  put (user) {
+    return ApiService.put('user', user)
+  }
+}
+
+export const User = {
 }
