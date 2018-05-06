@@ -5,11 +5,11 @@
         <div class="col-md-6 offset-md-3 col-xs-12">
           <h1 class="text-xs-center">Sign in</h1>
           <p class="text-xs-center">
-            <a href="#/register" class="">
-              Need an account?
-            </a>
+            <router-link :to="{path: '/register'}">Need an account?</router-link>
           </p>
-          <ul class="error-messages"></ul>
+          <ul class="error-messages" v-if="errors">
+            <li v-for="(val, key) in errors" :key="key">{{key + val}}</li>
+          </ul>
           <form @submit.prevent="login">
             <fieldset class="form-group">
               <input type="text" v-model="email" placeholder="Email" class="form-control form-control-lg">
@@ -27,9 +27,8 @@
   </div>
 </template>
 <script>
-import {LOGIN_ACCOUNT} from '@/store/actions.type.js'
-import {saveJWTToStorage} from '@/api/localStorage'
-import ApiService from '@/api'
+import {LOGIN_ACCOUNT, LOGOUT_ACCOUNT} from '@/store/actions.type.js'
+import {mapState} from 'vuex'
 export default {
   data () {
     return {
@@ -37,16 +36,25 @@ export default {
       password: ''
     }
   },
+  computed: {
+    ...mapState({
+      errors: state => state.authentication.errors
+    })
+  },
   methods: {
     login () {
       const {email, password} = this
       this.$store.dispatch(LOGIN_ACCOUNT, {user: {email, password}})
-        .then((data) => {
-          saveJWTToStorage(data.user.token)
+        .then(() => {
           this.$router.push({name: 'Home'})
-          ApiService.setHeader()
         })
+    },
+    logout () {
+      this.$store.dispatch(LOGOUT_ACCOUNT)
     }
+  },
+  created () {
+    this.logout()
   }
 }
 </script>

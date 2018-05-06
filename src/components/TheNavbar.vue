@@ -23,7 +23,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <a href="#" @click="logout" class="nav-link"><i class="ion-log-out"></i> Logout</a>
+            <a href="#" @click="doLogout" class="nav-link"><i class="ion-log-out"></i> Logout</a>
           </li>
         </template>
         <template v-else>
@@ -53,6 +53,7 @@ export default {
     }),
     doLogout () {
       this.logout()
+      if (this.$route.path !== '/') this.$router.push({name: 'Home'})
     }
   }
 }

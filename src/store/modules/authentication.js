@@ -1,10 +1,11 @@
 import ApiService, { Auth } from '@/api'
-import {getJWTFromStorage, removeJWTFromStorage} from '@/api/localStorage'
+import {getJWTFromStorage, removeJWTFromStorage, saveJWTToStorage} from '@/api/localStorage'
 import {
   REGISTER_ACCOUNT,
   LOGIN_ACCOUNT,
   LOGOUT_ACCOUNT,
-  CHECK_AUTH
+  CHECK_AUTH,
+  SET_ERROR
 } from '@/store/actions.type'
 import {
   SET_ACCOUNT,
@@ -22,7 +23,8 @@ const state = {
     updatedAt: '',
     username: ''
   },
-  isLogin: false
+  isLogin: false,
+  errors: {}
 }
 
 const actions = {
@@ -33,13 +35,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       Auth.login(user)
         .then(({data}) => {
-          commit(SET_ACCOUNT, {
-            ...data.user
-          })
-          resolve(data)
+          commit(SET_ACCOUNT, data.user)
+          saveJWTToStorage(data.user.token)
+          ApiService.setHeader()
+          resolve()
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(({response}) => {
+          commit(SET_ERROR, response.data.errors)
         })
     })
   },
@@ -59,6 +61,20 @@ const actions = {
           resolve()
         })
     })
+  },
+  [REGISTER_ACCOUNT] ({commit}, user) {
+    return new Promise((resolve, reject) => {
+      Auth.register(user)
+        .then(({data}) => {
+          commit(SET_ACCOUNT, data.user)
+          saveJWTToStorage(data.user.token)
+          ApiService.setHeader()
+          resolve()
+        })
+        .catch(({response}) => {
+          commit(SET_ERROR, response.data.errors)
+        })
+    })
   }
 }
 
@@ -70,6 +86,10 @@ const mutations = {
   [REMOVE_ACCOUNT] () {
     state.user = {}
     state.isLogin = false
+    state.errors = {}
+  },
+  [SET_ERROR] (state, errors) {
+    state.errors = errors
   }
 }
 
