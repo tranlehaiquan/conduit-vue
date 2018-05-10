@@ -68,8 +68,11 @@ export const HomeArticles = {
 }
 
 export const Article = {
-  get () {
-
+  get (slug) {
+    return ApiService.get(`articles/${slug}`)
+  },
+  getComment (slug) {
+    ApiService.get(`articles/${slug}/comments`)
   }
 }
 
