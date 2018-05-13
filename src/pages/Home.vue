@@ -24,13 +24,18 @@
           <p>Popular Tags</p>
 
           <div class="tag-list">
-            <router-link
-              v-for='tag in tags'
-              :key="tag"
-              :to="{path: '/tag/'+tag}"
-              class="tag-pill tag-default">
-              {{tag}}
-            </router-link>
+            <template v-if="tags.isLoading">
+              <p>Loading...</p>
+            </template>
+            <template v-else>
+              <router-link
+                v-for='tag in tags.data'
+                :key="tag"
+                :to="{path: '/tag/'+tag}"
+                class="tag-pill tag-default">
+                {{tag}}
+              </router-link>
+            </template>
           </div>
         </div>
       </div>

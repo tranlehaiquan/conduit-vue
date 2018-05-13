@@ -64,6 +64,9 @@ export const TagsService = {
 export const HomeArticles = {
   get (params) {
     return ApiService.query('articles', params)
+  },
+  getFeed (params) {
+    return ApiService.query('articles/feed', params)
   }
 }
 
