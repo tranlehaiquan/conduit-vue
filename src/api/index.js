@@ -76,6 +76,12 @@ export const Article = {
   },
   getComment (slug) {
     ApiService.get(`articles/${slug}/comments`)
+  },
+  favorite (slug) {
+    return ApiService.post(`articles/${slug}/favorite`)
+  },
+  unFavorite (slug) {
+    return ApiService.delete(`articles/${slug}/favorite`)
   }
 }
 

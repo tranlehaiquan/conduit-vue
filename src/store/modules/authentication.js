@@ -94,7 +94,9 @@ const mutations = {
 }
 
 const gets = {
-
+  isLogin: state => {
+    return state.isLogin
+  }
 }
 
 export default {
