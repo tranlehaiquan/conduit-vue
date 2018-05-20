@@ -11,7 +11,8 @@ import {
   START_FETCH_TAGS,
   SET_TAGS,
   START_FETCH_ARTICLES,
-  SET_ARTICLES
+  SET_ARTICLES,
+  UPDATE_LIST_ARTICLE
 } from '@/store/mutations.type'
 
 const state = {
@@ -86,6 +87,15 @@ const mutations = {
       error: '',
       isLoading: false
     }
+  },
+  [UPDATE_LIST_ARTICLE] (state, article) {
+    state.articles.data = state.articles.data.map((articleIndex) => {
+      if (articleIndex.slug !== article.slug) return articleIndex
+
+      articleIndex.favorited = article.favorited
+      articleIndex.favoritesCount = article.favoritesCount
+      return articleIndex
+    })
   }
 }
 

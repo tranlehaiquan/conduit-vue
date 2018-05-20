@@ -11,8 +11,10 @@ import {
   START_LOAD_COMMENT,
   END_LOAD_COMMENT,
   START_LOAD_ARTICLE,
-  END_LOAD_ARTICLE
+  END_LOAD_ARTICLE,
+  UPDATE_ARTICLE
 } from '@/store/mutations.type'
+import { UPDATE_LIST_ARTICLE } from '../mutations.type'
 
 const state = {
   article: {
@@ -32,9 +34,22 @@ const actions = {
   },
   [FAVORITE_ARTICLE] ({commit}, slug) {
     Article.favorite(slug)
+      .then(({data}) => {
+        commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
+        commit(UPDATE_ARTICLE, data.article)
+      })
+      .catch(({response}) => {
+
+      })
   },
   [UNFAVORITE_ARTICLE] ({commit}, slug) {
     Article.unFavorite(slug)
+      .then(({data}) => {
+        commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
+        commit(UPDATE_ARTICLE, data.article)
+      })
+      .catch(({response}) => {
+      })
   }
 }
 
@@ -49,6 +64,9 @@ const mutations = {
   [START_LOAD_COMMENT] () {
   },
   [END_LOAD_COMMENT] () {
+  },
+  [UPDATE_ARTICLE] (state, article) {
+    state.article.data = article
   }
 }
 
