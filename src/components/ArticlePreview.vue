@@ -20,11 +20,16 @@
       <h3>{{article.title}}</h3>
       <p>{{article.description}}</p>
       <span>Read more...</span>
+      <ul class="tag-list">
+        <li v-for="tag in article.tagList" :key="tag" class="tag-default tag-pill tag-outline">
+          {{tag}}
+        </li>
+      </ul>
     </router-link>
   </div>
 </template>
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapActions} from 'vuex'
 import {FAVORITE_ARTICLE, UNFAVORITE_ARTICLE} from '@/store/actions.type'
 export default {
   props: {
@@ -34,18 +39,16 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-
-    }),
-    isLogin () {
-      return this.$store.getters.isLogin
-    },
     isFavoritedClass () {
       return this.article.favorited ? 'active' : ''
     }
   },
   methods: {
     toggleFavorite () {
+      if (!this.$store.state.authentication.isLogin) {
+        this.$router.push({name: 'SignIn'})
+        return
+      }
       if (!this.article.favorited) this.favorite(this.article.slug)
       else this.unfavorite(this.article.slug)
     },

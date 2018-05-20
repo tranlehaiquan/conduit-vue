@@ -12,7 +12,12 @@ const ApiService = {
   },
 
   setHeader () {
-    Vue.axios.defaults.headers.common['Authorization'] = `Token ${getJWTFromStorage()}`
+    const token = getJWTFromStorage()
+    if (token) {
+      Vue.axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    } else {
+      delete Vue.axios.defaults.headers.common['Authorization']
+    }
   },
 
   query (resource, params) {

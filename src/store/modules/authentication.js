@@ -47,6 +47,7 @@ const actions = {
   },
   [LOGOUT_ACCOUNT] ({commit}) {
     removeJWTFromStorage()
+    ApiService.setHeader()
     commit(REMOVE_ACCOUNT)
   },
   [CHECK_AUTH] ({commit}) {
@@ -94,9 +95,6 @@ const mutations = {
 }
 
 const gets = {
-  isLogin: state => {
-    return state.isLogin
-  }
 }
 
 export default {
