@@ -26,7 +26,8 @@ export default new Router({
     },
     {
       path: '/articles/:id',
-      component: Article
+      component: Article,
+      props: true
     },
     {
       path: '/editor/',
@@ -55,7 +56,8 @@ export default new Router({
     {
       path: '/profile/:username',
       name: 'Profile',
-      component: Profile
+      component: Profile,
+      props: true
     }
   ]
 })

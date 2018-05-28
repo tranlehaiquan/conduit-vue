@@ -1,28 +1,25 @@
 <template>
-  <div class="cards" v-if="comments.length">
-    <div v-for="comment in comments" :key="comment.id" class="card">
-      <div class="card-block">
-        <p class="card-text">{{comment.body}}</p>
-      </div>
-      <div class="card-footer">
-        <a href="" class="comment-author">
-          <img :src="comment.author.image" class="comment-author-img" />
-        </a>
-        &nbsp;
-        <a href="" class="comment-author">{{comment.author.username}}</a>
-        <span class="date-posted">{{comment.createdAt}}</span>
-      </div>
-    </div>
+  <div class="cards" v-if="comments.data.length">
+    <the-comment v-for="comment in comments.data" :key="comment.id" :slug="slug" class="card" :comment="comment">
+    </the-comment>
   </div>
 </template>
 <script>
+import TheComment from '@/components/TheComment'
 export default {
+  components: {
+    TheComment
+  },
   props: {
     comments: {
-      type: Array,
+      type: Object,
       default: function () {
-        return []
+        return {}
       }
+    },
+    slug: {
+      type: String,
+      default: ''
     }
   }
 }

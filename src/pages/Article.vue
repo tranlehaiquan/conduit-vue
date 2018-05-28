@@ -1,91 +1,90 @@
 <template>
   <div class="article-page">
+    <div class="banner">
+      <div class="container" v-if="article.isLoading">
+        Is loading...
+      </div>
+      <div v-else class="container">
+        <h1>{{article.data.title}}</h1>
 
-  <div class="banner">
-    <div class="container" v-if="article">
-
-      <h1>{{article.title}}</h1>
-
-      <article-meta
-        :author="article.author"
-        :favorited="article.favorited"
-        :favoritesCount="article.favoritesCount"
-        :createdAt="article.createdAt"
-      >
-      </article-meta>
-    </div>
-  </div>
-
-  <div class="container page">
-
-    <div class="row article-content">
-      <div class="col-md-12">
-        {{article.body}}
+        <article-meta
+          :article="article.data"
+        >
+        </article-meta>
       </div>
     </div>
 
-    <hr />
+    <div class="container page">
 
-    <div class="article-actions">
-      <article-meta
-        :author="article.author"
-        :favorited="article.favorited"
-        :favoritesCount="article.favoritesCount"
-        :createdAt="article.createdAt"
-      >
-      </article-meta>
-    </div>
+      <div class="row article-content">
+        <div v-if="!article.isLoading" class="col-md-12">
+          {{article.data.body}}
+        </div>
+        <div v-else>
+          Is loading...
+        </div>
+      </div>
 
-    <div class="row">
+      <hr />
 
-      <div class="col-xs-12 col-md-8 offset-md-2">
+      <div class="article-actions">
+        <template v-if="!article.isLoading">
+          <article-meta
+            :article="article.data"
+          >
+          </article-meta>
+        </template>
+        <template v-else>
+          Is Loading...
+        </template>
+      </div>
 
-        <form class="card comment-form">
-          <div class="card-block">
-            <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
-          </div>
-          <div class="card-footer">
-            <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
-            <button class="btn btn-sm btn-primary">
-             Post Comment
-            </button>
-          </div>
-        </form>
+      <div class="row">
+        <div class="col-xs-12 col-md-8 offset-md-2">
+          <template v-if="isLogin">
+            <comment-editor :slug="article.data.slug" :author="article.data.author"></comment-editor>
+          </template>
+          <template v-else>
+            <p style="display: inherit;">
+              <router-link :to="{name: 'SignIn'}">Sign in</router-link>
+               or
+              <router-link :to="{name: 'SignUp'}">sign up</router-link> to add comments on this article.
+            </p>
+          </template>
+          <list-article-comment :comments="comments" :slug="article.data.slug"></list-article-comment>
+        </div>
 
-        <list-article-comment :comments="comments"></list-article-comment>
       </div>
 
     </div>
 
   </div>
-
-</div>
 </template>
 <script>
+import {mapState} from 'vuex'
+import {FETCH_ARTICLE, FETCH_COMMENT} from '@/store/actions.type'
 import ArticleMeta from '@/components/ArticleMeta'
+import CommentEditor from '@/components/CommentEditor'
 import ListArticleComment from '@/components/ListArticleComment'
-import ApiService from '@/api'
 export default {
+  props: ['id'],
   components: {
     ArticleMeta,
-    ListArticleComment
+    ListArticleComment,
+    CommentEditor
   },
-  data () {
-    return {
-      article: {},
-      comments: []
+  computed: {
+    ...mapState({
+      article: state => state.article.article,
+      comments: state => state.article.comments
+    }),
+    isLogin () {
+      return this.$store.state.authentication.isLogin
     }
   },
   mounted () {
-    ApiService.get(this.$route.path)
-      .then(({data}) => {
-        this.article = data.article
-      })
-
-    ApiService.get(this.$route.path + '/comments')
-      .then(({data}) => {
-        this.comments = data.comments
-      })
+    this.$store.dispatch(FETCH_ARTICLE, this.id)
+    this.$store.dispatch(FETCH_COMMENT, this.id)
   }
 }
 </script>

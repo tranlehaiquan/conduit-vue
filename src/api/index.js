@@ -79,14 +79,22 @@ export const Article = {
   get (slug) {
     return ApiService.get(`articles/${slug}`)
   },
-  getComment (slug) {
-    ApiService.get(`articles/${slug}/comments`)
-  },
   favorite (slug) {
     return ApiService.post(`articles/${slug}/favorite`)
   },
   unFavorite (slug) {
     return ApiService.delete(`articles/${slug}/favorite`)
+  },
+  getComment (slug) {
+    return ApiService.get(`articles/${slug}/comments`)
+  },
+  addComment (slug, comment) {
+    return ApiService.post(`articles/${slug}/comments`, {
+      comment: {body: comment}
+    })
+  },
+  removeComment (slug, id) {
+    return ApiService.delete(`articles/${slug}/comments/${id}`)
   }
 }
 
