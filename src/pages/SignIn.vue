@@ -7,9 +7,7 @@
           <p class="text-xs-center">
             <router-link :to="{path: '/register'}">Need an account?</router-link>
           </p>
-          <ul class="error-messages" v-if="errors">
-            <li v-for="(val, key) in errors" :key="key">{{key + val}}</li>
-          </ul>
+          <the-error :errors="errors"></the-error>
           <form @submit.prevent="login">
             <fieldset class="form-group">
               <input type="text" v-model="email" placeholder="Email" class="form-control form-control-lg">
@@ -28,18 +26,17 @@
 </template>
 <script>
 import {LOGIN_ACCOUNT, LOGOUT_ACCOUNT} from '@/store/actions.type.js'
-import {mapState} from 'vuex'
+import TheError from '@/components/TheError'
 export default {
+  components: {
+    TheError
+  },
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      errors: {}
     }
-  },
-  computed: {
-    ...mapState({
-      errors: state => state.authentication.errors
-    })
   },
   methods: {
     login () {
@@ -47,6 +44,9 @@ export default {
       this.$store.dispatch(LOGIN_ACCOUNT, {user: {email, password}})
         .then(() => {
           this.$router.push({name: 'Home'})
+        })
+        .catch(({response}) => {
+          this.errors = response.data.errors
         })
     },
     logout () {

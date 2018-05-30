@@ -16,7 +16,7 @@
         <i class="ion-heart"></i> {{article.favoritesCount}}
       </button>
     </div>
-    <router-link :to="{path: '/articles/'+ article.slug}" class="preview-link">
+    <router-link :to="{path: '/articles/'+ article.slug}" class="preview-link clearfix">
       <h3>{{article.title}}</h3>
       <p>{{article.description}}</p>
       <span>Read more...</span>

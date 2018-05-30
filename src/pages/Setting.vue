@@ -5,12 +5,12 @@
 
       <div class="col-md-6 offset-md-3 col-xs-12">
         <h1 class="text-xs-center">Your Settings</h1>
-
+        <the-error :errors="errors"></the-error>
         <form @submit.prevent="updateProfile">
           <fieldset>
               <fieldset class="form-group">
                 <input v-model="user.image"
-                  class="form-control" type="text" placeholder="URL of profile picture"
+                  class="form-control form-control-lg" type="text" placeholder="URL of profile picture"
                 >
               </fieldset>
               <fieldset class="form-group">
@@ -39,11 +39,31 @@
 </template>
 <script>
 import {UPDATE_PROFILE} from '@/store/actions.type'
+import TheError from '@/components/TheError'
 export default {
+  components: {
+    TheError
+  },
+  data () {
+    return {
+      user: {
+        image: '',
+        username: '',
+        bio: '',
+        email: '',
+        password: ''
+      },
+      errors: {}
+    }
+  },
   computed: {
-    user () {
+    currentUser () {
       return this.$store.state.authentication.user
     }
+  },
+  created () {
+    const {image, username, bio, email} = this.currentUser
+    Object.assign(this.user, {image, username, bio, email})
   },
   methods: {
     updateProfile () {
@@ -52,7 +72,7 @@ export default {
           this.$router.push({name: 'Home'})
         })
         .catch(({response}) => {
-          console.log(response)
+          this.errors = response.data.errors
         })
     }
   }

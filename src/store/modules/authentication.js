@@ -33,18 +33,12 @@ const actions = {
 
   },
   [LOGIN_ACCOUNT] ({commit}, user) {
-    return new Promise((resolve, reject) => {
-      Auth.login(user)
-        .then(({data}) => {
-          commit(SET_ACCOUNT, data.user)
-          saveJWTToStorage(data.user.token)
-          ApiService.setHeader()
-          resolve()
-        })
-        .catch(({response}) => {
-          commit(SET_ERROR, response.data.errors)
-        })
-    })
+    return Auth.login(user)
+      .then(({data}) => {
+        commit(SET_ACCOUNT, data.user)
+        saveJWTToStorage(data.user.token)
+        ApiService.setHeader()
+      })
   },
   [LOGOUT_ACCOUNT] ({commit}) {
     removeJWTFromStorage()
@@ -80,7 +74,8 @@ const actions = {
   },
   [UPDATE_PROFILE] ({commit, state}, user) {
     let {email, username, password, image, bio} = user
-    if (password) password = state.user.password
+    console.log(password, '?')
+    if (!password) password = state.user.password
     return Auth.updateProfile({email, username, password, image, bio})
       .then(({data}) => {
         commit(SET_ACCOUNT, data.user)
