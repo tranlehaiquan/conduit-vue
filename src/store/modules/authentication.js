@@ -30,7 +30,6 @@ const state = {
 
 const actions = {
   [REGISTER_ACCOUNT] ({commit}, user) {
-
   },
   [LOGIN_ACCOUNT] ({commit}, user) {
     return Auth.login(user)

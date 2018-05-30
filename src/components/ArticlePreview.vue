@@ -5,7 +5,7 @@
         <img :src="article.author.image" />
       </a>
       <div class="info">
-        <a href="" class="author">{{article.author.username}}</a>
+        <router-link :to="{name: 'ProfileArticles', params: {username: article.author.username}}" class="author">{{article.author.username}}</router-link>
         <span class="date">{{article.createdAt}}</span>
       </div>
       <button

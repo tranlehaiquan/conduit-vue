@@ -18,7 +18,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ path: 'profile/' + user.username }" class="nav-link">
+            <router-link :to="{ name: 'ProfileArticles', params: {username: user.username} }" class="nav-link">
               {{user.username}}
             </router-link>
           </li>

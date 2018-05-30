@@ -10,6 +10,8 @@ import SignUp from '@/pages/SignUp'
 import HomeFeed from '@/pages/HomeFeed'
 import HomeTag from '@/pages/HomeTag'
 import HomeGlobal from '@/pages/HomeGlobal'
+import ProfileArticles from '@/pages/ProfileArticles'
+import ProfileFavorited from '@/pages/ProfileFavorited'
 
 Vue.use(Router)
 
@@ -55,9 +57,12 @@ export default new Router({
     },
     {
       path: '/profile/:username',
-      name: 'Profile',
       component: Profile,
-      props: true
+      props: true,
+      children: [
+        {path: '', component: ProfileArticles, name: 'ProfileArticles'},
+        {path: 'favorites', component: ProfileFavorited, name: 'ProfileFavorited'}
+      ]
     }
   ]
 })
