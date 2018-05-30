@@ -17,8 +17,7 @@
     <div class="container page">
 
       <div class="row article-content">
-        <div v-if="!article.isLoading" class="col-md-12">
-          {{article.data.body}}
+        <div v-if="!article.isLoading" class="col-md-12" v-html="content">
         </div>
         <div v-else>
           Is loading...
@@ -61,6 +60,7 @@
   </div>
 </template>
 <script>
+import marked from 'marked'
 import {mapState} from 'vuex'
 import {FETCH_ARTICLE, FETCH_COMMENT} from '@/store/actions.type'
 import ArticleMeta from '@/components/ArticleMeta'
@@ -80,6 +80,9 @@ export default {
     }),
     isLogin () {
       return this.$store.state.authentication.isLogin
+    },
+    content () {
+      return marked(this.article.data.body)
     }
   },
   mounted () {
