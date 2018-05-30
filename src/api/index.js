@@ -110,6 +110,9 @@ export const Auth = {
   },
   put (user) {
     return ApiService.put('user', user)
+  },
+  updateProfile (user) {
+    return ApiService.put('user', {user})
   }
 }
 

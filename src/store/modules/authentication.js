@@ -5,7 +5,8 @@ import {
   LOGIN_ACCOUNT,
   LOGOUT_ACCOUNT,
   CHECK_AUTH,
-  SET_ERROR
+  SET_ERROR,
+  UPDATE_PROFILE
 } from '@/store/actions.type'
 import {
   SET_ACCOUNT,
@@ -76,6 +77,14 @@ const actions = {
           commit(SET_ERROR, response.data.errors)
         })
     })
+  },
+  [UPDATE_PROFILE] ({commit, state}, user) {
+    let {email, username, password, image, bio} = user
+    if (password) password = state.user.password
+    return Auth.updateProfile({email, username, password, image, bio})
+      .then(({data}) => {
+        commit(SET_ACCOUNT, data.user)
+      })
   }
 }
 
