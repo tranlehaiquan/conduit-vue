@@ -15,13 +15,20 @@
     </template>
     <template v-else>
       <div class="article-preview">
-      No articles are here... yet.
-    </div>
+        No articles are here... yet.
+      </div>
     </template>
+    <TheNavArticle></TheNavArticle>
   </div>
 </template>
 <script>
+import TheNavArticle from '@/components/TheNavArticle'
+import ArticlePreview from '@/components/ArticlePreview'
 export default {
+  components: {
+    ArticlePreview,
+    TheNavArticle
+  },
   props: {
     articles: {
       type: Object,

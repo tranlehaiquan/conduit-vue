@@ -6,12 +6,7 @@
       </div>
     </template>
     <template v-else-if="articles.data.length">
-      <article-preview
-        v-for="(article, index) in articles.data"
-        :key="article.slug + index"
-        :article="article"
-      >
-      </article-preview>
+      <ListArticle :articles="articles"></ListArticle>
     </template>
     <template v-else>
       <div class="article-preview">
@@ -21,11 +16,11 @@
   </div>
 </template>
 <script>
-import ArticlePreview from '@/components/ArticlePreview.vue'
+import ListArticle from '@/components/ListArticle'
 import {FETCH_ARTICLES} from '@/store/actions.type'
 export default {
   components: {
-    ArticlePreview
+    ListArticle
   },
   created () {
     this.$store.dispatch(FETCH_ARTICLES)

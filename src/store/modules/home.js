@@ -18,6 +18,7 @@ import {
 const state = {
   articles: {
     data: [],
+    articlesCount: 0,
     isLoading: false,
     error: ''
   },
@@ -41,20 +42,18 @@ const actions = {
   },
   [FETCH_ARTICLES] ({commit}, params) {
     commit(START_FETCH_ARTICLES)
-    HomeArticles.get(params)
+    return HomeArticles.get(params)
       .then(({data}) => {
-        commit(SET_ARTICLES, data.articles)
-      })
-      .catch(({response}) => {
+        const {articles, articlesCount} = data
+        commit(SET_ARTICLES, {articles, articlesCount})
       })
   },
   [FETCH_FEED_ARTICLES] ({commit}, params) {
     commit(START_FETCH_ARTICLES)
-    HomeArticles.getFeed(params)
+    return HomeArticles.getFeed(params)
       .then(({data}) => {
-        commit(SET_ARTICLES, data.articles)
-      })
-      .catch(({response}) => {
+        const {articles, articlesCount} = data
+        commit(SET_ARTICLES, {articles, articlesCount})
       })
   }
 }
@@ -81,9 +80,11 @@ const mutations = {
       isLoading: true
     }
   },
-  [SET_ARTICLES] (state, articles) {
+  [SET_ARTICLES] (state, payload) {
+    const {articles, articlesCount} = payload
     state.articles = {
       data: articles,
+      articlesCount,
       error: '',
       isLoading: false
     }
