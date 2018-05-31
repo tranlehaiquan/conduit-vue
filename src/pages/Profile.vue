@@ -5,25 +5,32 @@
     <div class="container">
       <div class="row">
 
-        <div class="col-xs-12 col-md-10 offset-md-1">
-          <img :src="user.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'" class="user-img" />
-          <h4>{{user.username}}</h4>
-          <p>
-            {{user.bio}}
-          </p>
-          <template v-if="!isCurrentUser">
-            <button class="btn btn-sm btn-outline-secondary action-btn">
-              <i class="ion-plus-round"></i>
-              &nbsp;
-              Follow {{user.username}}
-            </button>
-          </template>
-          <template v-else>
-            <router-link :to="{name: 'Setting'}" class="btn btn-sm btn-outline-secondary action-btn">
-              <i class="ion-gear-a"></i> Edit Profile Settings
-            </router-link>
-          </template>
-        </div>
+        <template v-if="userLoading">
+          <div class="col-xs-12 col-md-10 offset-md-1">
+            Is loading...
+          </div>
+        </template>
+        <template v-else>
+          <div class="col-xs-12 col-md-10 offset-md-1">
+            <img :src="userImage" class="user-img" />
+            <h4>{{user.username}}</h4>
+            <p>
+              {{user.bio}}
+            </p>
+            <template v-if="!isCurrentUser">
+              <button @click="toggleFollow" class="btn btn-sm btn-outline-secondary action-btn">
+                <i :class="user.following ? 'ion-minus' : 'ion-plus'"></i>
+                &nbsp;
+                {{buttonFollowText}}
+              </button>
+            </template>
+            <template v-else>
+              <router-link :to="{name: 'Setting'}" class="btn btn-sm btn-outline-secondary action-btn">
+                <i class="ion-gear-a"></i> Edit Profile Settings
+              </router-link>
+            </template>
+          </div>
+        </template>
 
       </div>
     </div>
@@ -46,7 +53,7 @@
 </div>
 </template>
 <script>
-import {FOLLOW_USER, UNFOLLOW_USER, FETCH_PROFILE} from '@/store/actions.type'
+import {FOLLOW_USER, UNFOLLOW_USER, FETCH_PROFILE, COPY_PROFILE} from '@/store/actions.type'
 import store from '@/store'
 import ProfileNav from '@/components/ProfileNav'
 export default {
@@ -61,16 +68,31 @@ export default {
   },
   computed: {
     user () {
-      return this.$store.state.authentication.user
+      return this.$store.state.profile.user
+    },
+    userLoading () {
+      return this.$store.state.profile.isLoading
     },
     isCurrentUser () {
-      return this.username === this.user.username
+      return store.state.authentication.user.username === this.user.username
+    },
+    userImage () {
+      return this.user.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'
+    },
+    buttonFollowText () {
+      if (this.user.following) return `Unfollow ${this.user.username}`
+      return `Follow ${this.user.username}`
     }
   },
   beforeRouteEnter (to, from, next) {
     const currentUsername = store.state.authentication.user.username
-    if (currentUsername === to.params.username) console.log('same')
-    else store.dispatch(FETCH_PROFILE, to.params.username)
+    if (currentUsername === to.params.username) {
+      const {username, bio, image} = store.state.authentication.user
+      const user = {username, bio, image, following: false}
+      store.dispatch(COPY_PROFILE, user)
+    } else {
+      store.dispatch(FETCH_PROFILE, to.params.username)
+    }
     next()
   },
   methods: {
