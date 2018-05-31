@@ -116,5 +116,14 @@ export const Auth = {
   }
 }
 
-export const User = {
+export const profile = {
+  get (username) {
+    ApiService.get(`profile/${username}`)
+  },
+  follow (username) {
+    ApiService.post(`profile/${username}/follow`)
+  },
+  unFollow (username) {
+    ApiService.delete(`profile/${username}/follow`)
+  }
 }

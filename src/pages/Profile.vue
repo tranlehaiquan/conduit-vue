@@ -46,6 +46,8 @@
 </div>
 </template>
 <script>
+import {FOLLOW_USER, UNFOLLOW_USER, FETCH_PROFILE} from '@/store/actions.type'
+import store from '@/store'
 import ProfileNav from '@/components/ProfileNav'
 export default {
   components: {
@@ -63,6 +65,18 @@ export default {
     },
     isCurrentUser () {
       return this.username === this.user.username
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    const currentUsername = store.state.authentication.user.username
+    if (currentUsername === to.params.username) console.log('same')
+    else store.dispatch(FETCH_PROFILE, to.params.username)
+    next()
+  },
+  methods: {
+    toggleFollow () {
+      if (this.user.following) store.dispatch(UNFOLLOW_USER, this.user.username)
+      else store.dispatch(FOLLOW_USER, this.user.username)
     }
   }
 }
