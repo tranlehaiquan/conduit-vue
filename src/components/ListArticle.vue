@@ -25,11 +25,21 @@
 import TheNavArticle from '@/components/TheNavArticle'
 import ArticlePreview from '@/components/ArticlePreview'
 export default {
-  components: {
-    ArticlePreview,
-    TheNavArticle
-  },
   props: {
+    query: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    },
+    limit: {
+      type: Number,
+      default: 10
+    },
+    offset: {
+      type: Number,
+      default: 0
+    },
     articles: {
       type: Object,
       default: () => {
@@ -40,6 +50,10 @@ export default {
         }
       }
     }
+  },
+  components: {
+    ArticlePreview,
+    TheNavArticle
   }
 }
 </script>
