@@ -95,6 +95,17 @@ export default {
     }
     next()
   },
+  beforeRouteUpdate (to, from, next) {
+    const currentUsername = store.state.authentication.user.username
+    if (currentUsername === to.params.username) {
+      const {username, bio, image} = store.state.authentication.user
+      const user = {username, bio, image, following: false}
+      store.dispatch(COPY_PROFILE, user)
+    } else {
+      store.dispatch(FETCH_PROFILE, to.params.username)
+    }
+    next()
+  },
   methods: {
     toggleFollow () {
       if (this.user.following) store.dispatch(UNFOLLOW_USER, this.user.username)

@@ -22,6 +22,7 @@
   </div>
 </template>
 <script>
+import {FETCH_ARTICLES} from '@/store/actions.type'
 import TheNavArticle from '@/components/TheNavArticle'
 import ArticlePreview from '@/components/ArticlePreview'
 export default {
@@ -39,21 +40,22 @@ export default {
     offset: {
       type: Number,
       default: 0
-    },
-    articles: {
-      type: Object,
-      default: () => {
-        return {
-          isLoading: false,
-          data: [],
-          error: ''
-        }
-      }
     }
+  },
+  data () {
+    return {}
   },
   components: {
     ArticlePreview,
     TheNavArticle
+  },
+  created () {
+    this.$store.dispatch(FETCH_ARTICLES)
+  },
+  computed: {
+    articles () {
+      return this.$store.state.home.articles
+    }
   }
 }
 </script>
