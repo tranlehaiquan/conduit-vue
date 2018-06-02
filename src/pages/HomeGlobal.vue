@@ -1,5 +1,5 @@
 <template>
-  <ListArticle></ListArticle>
+  <ListArticle ></ListArticle>
 </template>
 <script>
 import ListArticle from '@/components/ListArticle'

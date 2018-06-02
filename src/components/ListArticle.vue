@@ -18,7 +18,7 @@
         No articles are here... yet.
       </div>
     </template>
-    <TheNavArticle></TheNavArticle>
+    <TheNavArticle v-model="offset" :pageCount="pageCount"></TheNavArticle>
   </div>
 </template>
 <script>
@@ -36,25 +36,33 @@ export default {
     limit: {
       type: Number,
       default: 10
-    },
-    offset: {
-      type: Number,
-      default: 0
     }
   },
   data () {
-    return {}
+    return {
+      offset: 0
+    }
   },
   components: {
     ArticlePreview,
     TheNavArticle
   },
   created () {
-    this.$store.dispatch(FETCH_ARTICLES)
+    const query = Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
+    this.$store.dispatch(FETCH_ARTICLES, query)
+  },
+  watch: {
+    offset () {
+      const query = Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
+      this.$store.dispatch(FETCH_ARTICLES, query)
+    }
   },
   computed: {
     articles () {
       return this.$store.state.home.articles
+    },
+    pageCount () {
+      return this.articles.articlesCount / this.limit
     }
   }
 }
