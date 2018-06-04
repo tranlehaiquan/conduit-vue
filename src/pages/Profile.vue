@@ -39,11 +39,19 @@
     <div class="row">
       <div class="col-xs-12 col-md-10 offset-md-1">
         <div class="articles-toggle">
-          <profile-nav></profile-nav>
+          <ul class="nav nav-pills outline-active">
+            <li class="nav-item">
+              <router-link :to="{name: 'ProfileArticles'}" exact-active-class="active" class="nav-link">Articles</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{name: 'ProfileFavorited'}" exact-active-class="active" class="nav-link">
+                Favorited
+              </router-link>
+            </li>
+          </ul>
         </div>
 
         <router-view></router-view>
-
       </div>
 
     </div>
@@ -54,11 +62,7 @@
 <script>
 import {FOLLOW_USER, UNFOLLOW_USER, FETCH_PROFILE, COPY_PROFILE} from '@/store/actions.type'
 import store from '@/store'
-import ProfileNav from '@/components/ProfileNav'
 export default {
-  components: {
-    ProfileNav
-  },
   props: {
     username: {
       type: String,

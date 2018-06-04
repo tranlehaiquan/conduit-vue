@@ -53,7 +53,11 @@ export default {
   },
   watch: {
     offset () {
-      const query = Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
+      const query = this.queryString
+      this.$store.dispatch(FETCH_ARTICLES, query)
+    },
+    query () {
+      const query = this.queryString
       this.$store.dispatch(FETCH_ARTICLES, query)
     }
   },
@@ -62,7 +66,10 @@ export default {
       return this.$store.state.home.articles
     },
     pageCount () {
-      return this.articles.articlesCount / this.limit
+      return Math.round(this.articles.articlesCount / this.limit)
+    },
+    queryString () {
+      return Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
     }
   }
 }
