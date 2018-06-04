@@ -8,17 +8,19 @@
         </li>
         <template v-if="isLogin">
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'CreateArticle'}">
+            <router-link class="nav-link" :to="{ name: 'CreateArticle'}" active-class="active">
               <i class="ion-compose"></i>&nbsp; Create Post
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{name: 'Setting'}" class="nav-link">
+            <router-link :to="{name: 'Setting'}" class="nav-link" active-class="active">
               <i class="ion-gear-a"></i>&nbsp;Settings
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'ProfileArticles', params: {username: user.username} }" class="nav-link">
+            <router-link
+              :to="{ name: 'ProfileArticles', params: {username: user.username} }"
+              exact-active-class="active" class="nav-link">
               {{user.username}}
             </router-link>
           </li>
@@ -28,10 +30,10 @@
         </template>
         <template v-else>
           <li class="nav-item">
-            <router-link :to="{name: 'SignUp'}" class="nav-link"><i class="ion-compose"></i> Sign up</router-link>
+            <router-link :to="{name: 'SignUp'}" class="nav-link" active-class="active"><i class="ion-compose"></i> Sign up</router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{name: 'SignIn'}" class="nav-link"><i class="ion-compose"></i> Sign in</router-link>
+            <router-link :to="{name: 'SignIn'}" class="nav-link" active-class="active"><i class="ion-compose"></i> Sign in</router-link>
           </li>
         </template>
       </ul>
