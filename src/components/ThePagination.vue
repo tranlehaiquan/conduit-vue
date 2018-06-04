@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <ul class="pagination" v-if="pageCount">
+    <ul class="pagination" v-if="pageCount > 1">
       <li
         v-for="page in pageCount"
         :key="page"

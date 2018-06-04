@@ -18,12 +18,12 @@
         No articles are here... yet.
       </div>
     </template>
-    <TheNavArticle v-model="offset" :pageCount="pageCount"></TheNavArticle>
+    <the-pagination v-model="offset" :pageCount="pageCount"></the-pagination>
   </div>
 </template>
 <script>
 import {FETCH_ARTICLES} from '@/store/actions.type'
-import TheNavArticle from '@/components/TheNavArticle'
+import ThePagination from '@/components/ThePagination'
 import ArticlePreview from '@/components/ArticlePreview'
 export default {
   props: {
@@ -45,7 +45,7 @@ export default {
   },
   components: {
     ArticlePreview,
-    TheNavArticle
+    ThePagination
   },
   created () {
     const query = Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
@@ -53,7 +53,11 @@ export default {
   },
   watch: {
     offset () {
-      const query = Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
+      const query = this.queryString
+      this.$store.dispatch(FETCH_ARTICLES, query)
+    },
+    query () {
+      const query = this.queryString
       this.$store.dispatch(FETCH_ARTICLES, query)
     }
   },
@@ -62,7 +66,10 @@ export default {
       return this.$store.state.home.articles
     },
     pageCount () {
-      return this.articles.articlesCount / this.limit
+      return Math.round(this.articles.articlesCount / this.limit)
+    },
+    queryString () {
+      return Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
     }
   }
 }
