@@ -31,6 +31,7 @@
             </template>
           </div>
         </template>
+
       </div>
     </div>
   </div>
@@ -95,10 +96,6 @@ export default {
     next()
   },
   beforeRouteUpdate (to, from, next) {
-    if (to.params.username === from.params.username) {
-      next()
-      return
-    }
     const currentUsername = store.state.authentication.user.username
     if (currentUsername === to.params.username) {
       const {username, bio, image} = store.state.authentication.user
