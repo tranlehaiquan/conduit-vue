@@ -59,7 +59,7 @@ export default {
     },
     checkIsInputError () {
       if (!this.input) return 'Can not be blank'
-      const isDuplicate = this.tags.length && this.tags.every((tag) => { return tag.content === this.input })
+      const isDuplicate = this.tags.length && !this.tags.every((tag) => { return tag.content !== this.input })
       if (isDuplicate) return 'Can not be duplicate'
 
       return false
