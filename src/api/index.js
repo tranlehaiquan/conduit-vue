@@ -95,6 +95,9 @@ export const Article = {
   },
   removeComment (slug, id) {
     return ApiService.delete(`articles/${slug}/comments/${id}`)
+  },
+  deleteArticle (slug) {
+    return ApiService.delete(`articles/${slug}`)
   }
 }
 

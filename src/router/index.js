@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Article from '@/pages/Article'
-import EditArticle from '@/pages/EditArticle'
+import EditorArticle from '@/pages/EditorArticle'
 import Profile from '@/pages/Profile'
 import Setting from '@/pages/Setting'
 import SignIn from '@/pages/SignIn'
@@ -32,13 +32,9 @@ export default new Router({
       props: true
     },
     {
-      path: '/editor/',
-      name: 'CreateArticle',
-      component: EditArticle
-    },
-    {
-      path: '/editor/:id',
-      component: EditArticle
+      path: '/editor/:slug?',
+      name: 'EditorArticle',
+      component: EditorArticle
     },
     {
       path: '/login',

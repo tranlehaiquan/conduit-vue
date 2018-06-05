@@ -7,7 +7,8 @@ import {
   FAVORITE_ARTICLE,
   UNFAVORITE_ARTICLE,
   ADD_COMMENT,
-  REMOVE_COMMENT
+  REMOVE_COMMENT,
+  DELETE_ARTICLE
 } from '@/store/actions.type'
 import {
   START_LOAD_ARTICLE,
@@ -42,11 +43,10 @@ const state = {
 const actions = {
   [FETCH_ARTICLE] ({commit}, slug) {
     commit(START_LOAD_ARTICLE)
-    Article.get(slug)
+    return Article.get(slug)
       .then(({data}) => {
         commit(END_LOAD_ARTICLE, data.article)
       })
-      .catch()
   },
   [FAVORITE_ARTICLE] ({commit}, slug) {
     Article.favorite(slug)
@@ -103,6 +103,9 @@ const actions = {
       })
       .catch(({response}) => {
       })
+  },
+  [DELETE_ARTICLE] ({commit}, slug) {
+    return Article.deleteArticle(slug)
   }
 }
 
