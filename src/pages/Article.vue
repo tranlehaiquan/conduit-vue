@@ -61,7 +61,7 @@
 </template>
 <script>
 import marked from 'marked'
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import {FETCH_ARTICLE, FETCH_COMMENT} from '@/store/actions.type'
 import ArticleMeta from '@/components/ArticleMeta'
 import CommentEditor from '@/components/CommentEditor'
@@ -86,8 +86,14 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch(FETCH_ARTICLE, this.slug)
-    this.$store.dispatch(FETCH_COMMENT, this.slug)
+    if (this.slug !== this.article.data.slug) this.fetchArticle(this.slug)
+    this.fetchComment(this.slug)
+  },
+  methods: {
+    ...mapActions({
+      fetchArticle: FETCH_ARTICLE,
+      fetchComment: FETCH_COMMENT
+    })
   }
 }
 </script>

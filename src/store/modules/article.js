@@ -10,7 +10,8 @@ import {
   REMOVE_COMMENT,
   DELETE_ARTICLE,
   UPDATE_ARTICLE,
-  CREATE_ARTICLE
+  CREATE_ARTICLE,
+  SET_AUTHOR_ARTICLE
 } from '@/store/actions.type'
 import {
   START_LOAD_ARTICLE,
@@ -115,6 +116,10 @@ const actions = {
   },
   [CREATE_ARTICLE] ({commit}, article) {
     return Article.createArticle(article)
+  },
+  [SET_AUTHOR_ARTICLE] ({commit, state}, author) {
+    const article = Object.assign({}, state.article.data, {author})
+    commit(SET_ARTICLE, article)
   }
 }
 

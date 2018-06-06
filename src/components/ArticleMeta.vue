@@ -9,13 +9,13 @@
     </div>
 
     <template v-if="!isAuthor">
-      <button class="btn btn-sm btn-outline-secondary">
-        <i class="ion-plus-round"></i>
+      <button @click="toggleFollow" :class="buttonClass" class="btn btn-sm">
+        <i :class="article.author.following ? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
-        Follow {{article.author.username}} <span class="counter">(10)</span>
+        {{buttonFollowText}}
       </button>
       &nbsp;&nbsp;
-      <button :class="article.favorited && 'active'" class="btn btn-sm btn-outline-primary">
+      <button @click="toggleFavorite" :class="article.favorited && 'active'" class="btn btn-sm btn-outline-primary">
         <i class="ion-heart"></i>
         &nbsp;
         Favorite Post <span class="counter">{{article.favoritesCount}}</span>
@@ -36,7 +36,14 @@
   </div>
 </template>
 <script>
-import {DELETE_ARTICLE} from '@/store/actions.type'
+import {
+  DELETE_ARTICLE,
+  FAVORITE_ARTICLE,
+  UNFAVORITE_ARTICLE,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
+  SET_AUTHOR_ARTICLE } from '@/store/actions.type'
+import {mapActions} from 'vuex'
 export default {
   props: {
     article: {
@@ -47,14 +54,37 @@ export default {
   computed: {
     isAuthor () {
       return this.$store.state.authentication.user.username === this.article.author.username
+    },
+    buttonClass () {
+      return this.article.author.following ? 'btn-danger' : 'btn-outline-secondary'
+    },
+    buttonFollowText () {
+      return this.article.author.following ? 'Unfollow' : 'Follow'
     }
   },
   methods: {
-    deleteArticle () {
-      this.$store.dispatch(DELETE_ARTICLE, this.article.slug)
-        .then(() => {
-          this.$router.push({name: 'Home'})
-        })
+    ...mapActions({
+      deleteArticle: DELETE_ARTICLE,
+      favoriteArticle: FAVORITE_ARTICLE,
+      unfavoriteArticle: UNFAVORITE_ARTICLE,
+      followUser: FOLLOW_USER,
+      unfollowUser: UNFOLLOW_USER,
+      setAuthor: SET_AUTHOR_ARTICLE
+    }),
+    async deleteArticle () {
+      await this.deleteArticle(this.article.slug)
+      this.$router.push({name: 'Home'})
+    },
+    async toggleFollow () {
+      const action = this.article.author.following ? this.unfollowUser : this.followUser
+
+      const author = await action(this.article.author.username)
+      this.setAuthor(author)
+    },
+    async toggleFavorite () {
+      const action = this.article.favorited ? this.unfavoriteArticle : this.favoriteArticle
+
+      await action(this.article.slug)
     }
   }
 }

@@ -28,15 +28,17 @@ const actions = {
     commit(SET_PROFILE, {user, isLoading: false})
   },
   [FOLLOW_USER] ({commit}, username) {
-    Profile.follow(username)
+    return Profile.follow(username)
       .then(({data}) => {
         commit(SET_PROFILE, {user: data.profile, isLoading: false})
+        return data.profile
       })
   },
   [UNFOLLOW_USER] ({commit}, username) {
-    Profile.unFollow(username)
+    return Profile.unFollow(username)
       .then(({data}) => {
         commit(SET_PROFILE, {user: data.profile, isLoading: false})
+        return data.profile
       })
   }
 }
