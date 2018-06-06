@@ -4,7 +4,7 @@
       <router-link :to="{ name: 'Home'}" class="navbar-brand">conduit</router-link>
       <ul class="nav navbar-nav pull-xs-right">
         <li class="nav-item">
-          <router-link :to="{ name: 'Home'}" class="nav-link active">Home</router-link>
+          <router-link :to="{ name: 'Home'}" class="nav-link" exact-active-class="active">Home</router-link>
         </li>
         <template v-if="isLogin">
           <li class="nav-item">
