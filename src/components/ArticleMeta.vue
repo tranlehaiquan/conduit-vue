@@ -9,13 +9,13 @@
     </div>
 
     <template v-if="!isAuthor">
-      <button @click="toggleFollow" :class="buttonClass" class="btn btn-sm">
+      <button @click="isLogin ? toggleFollow() : pushToLoginScreen()" :class="buttonClass" class="btn btn-sm">
         <i :class="article.author.following ? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
         {{buttonFollowText}}
       </button>
       &nbsp;&nbsp;
-      <button @click="toggleFavorite" :class="article.favorited && 'active'" class="btn btn-sm btn-outline-primary">
+      <button @click="isLogin ? toggleFavorite() : pushToLoginScreen()" :class="article.favorited && 'active'" class="btn btn-sm btn-outline-primary">
         <i class="ion-heart"></i>
         &nbsp;
         Favorite Post <span class="counter">{{article.favoritesCount}}</span>
@@ -43,7 +43,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   SET_AUTHOR_ARTICLE } from '@/store/actions.type'
-import {mapActions} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 export default {
   props: {
     article: {
@@ -52,14 +52,20 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      user: (state) => state.authentication.user
+    }),
     isAuthor () {
-      return this.$store.state.authentication.user.username === this.article.author.username
+      return this.user.username === this.article.author.username
     },
     buttonClass () {
       return this.article.author.following ? 'btn-danger' : 'btn-outline-secondary'
     },
     buttonFollowText () {
       return this.article.author.following ? 'Unfollow' : 'Follow'
+    },
+    isLogin () {
+      return this.user.username
     }
   },
   methods: {
@@ -76,6 +82,11 @@ export default {
       this.$router.push({name: 'Home'})
     },
     async toggleFollow () {
+      if (!this.isLogin) {
+        this.$router.push({name: 'SignIn'})
+        return
+      }
+
       const action = this.article.author.following ? this.unfollowUser : this.followUser
 
       const author = await action(this.article.author.username)
@@ -85,6 +96,9 @@ export default {
       const action = this.article.favorited ? this.unfavoriteArticle : this.favoriteArticle
 
       await action(this.article.slug)
+    },
+    pushToLoginScreen () {
+      this.$router.push({name: 'SignIn'})
     }
   }
 }
