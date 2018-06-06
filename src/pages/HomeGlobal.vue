@@ -1,5 +1,5 @@
 <template>
-  <ListArticle ></ListArticle>
+  <ListArticle :limit="7"></ListArticle>
 </template>
 <script>
 import ListArticle from '@/components/ListArticle'
