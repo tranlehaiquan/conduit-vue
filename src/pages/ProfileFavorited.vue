@@ -1,5 +1,5 @@
 <template>
-  <ListArticle :query="{favorited: username}"></ListArticle>
+  <ListArticle :query="{favorited: username}" :limit="5"></ListArticle>
 </template>
 
 <script>

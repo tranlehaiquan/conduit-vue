@@ -1,5 +1,5 @@
 <template>
-  <ListArticle :query="{author: username}"></ListArticle>
+  <ListArticle :query="{author: username}" :limit="5"></ListArticle>
 </template>
 
 <script>
