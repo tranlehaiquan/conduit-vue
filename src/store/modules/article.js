@@ -13,7 +13,7 @@ import {
 import {
   START_LOAD_ARTICLE,
   END_LOAD_ARTICLE,
-  UPDATE_ARTICLE,
+  SET_ARTICLE,
   UPDATE_LIST_ARTICLE,
   UPDATE_COMMENT
 } from '@/store/mutations.type'
@@ -52,7 +52,7 @@ const actions = {
     Article.favorite(slug)
       .then(({data}) => {
         commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
-        commit(UPDATE_ARTICLE, data.article)
+        commit(SET_ARTICLE, data.article)
       })
       .catch(({response}) => {
       })
@@ -61,7 +61,7 @@ const actions = {
     Article.unFavorite(slug)
       .then(({data}) => {
         commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
-        commit(UPDATE_ARTICLE, data.article)
+        commit(SET_ARTICLE, data.article)
       })
       .catch(({response}) => {
       })
@@ -125,7 +125,7 @@ const mutations = {
       data: article
     }
   },
-  [UPDATE_ARTICLE] (state, article) {
+  [SET_ARTICLE] (state, article) {
     state.article.data = article
   },
   [UPDATE_COMMENT] (state, comments) {
