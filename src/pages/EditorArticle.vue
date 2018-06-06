@@ -18,7 +18,7 @@
             <fieldset class="form-group">
               <TheInputTags v-model="tagList"></TheInputTags>
             </fieldset>
-            <button class="btn btn-lg pull-xs-right btn-primary" type="button">
+            <button @click="submitArticle" class="btn pull-xs-right btn-primary" type="button">
               Publish Article
             </button>
           </fieldset>
@@ -30,8 +30,10 @@
 </div>
 </template>
 <script>
+import {mapActions} from 'vuex'
 import TheInputTags from '@/components/TheInputTags'
 import store from '@/store'
+import {UPDATE_ARTICLE, CREATE_ARTICLE} from '@/store/actions.type'
 export default {
   components: {
     TheInputTags
@@ -60,7 +62,12 @@ export default {
         vm.title = title
         vm.description = description
         vm.body = body
-        vm.tagList = tagList
+        vm.tagList = tagList.map((tag) => {
+          return {
+            content: tag,
+            key: Date.now() + tag
+          }
+        })
       }
     })
   },
@@ -73,7 +80,12 @@ export default {
       this.title = title
       this.description = description
       this.body = body
-      this.tagList = tagList
+      this.tagList = tagList.map((tag) => {
+        return {
+          content: tag,
+          key: Date.now() + tag
+        }
+      })
     } else {
       this.title = ''
       this.description = ''
@@ -81,6 +93,26 @@ export default {
       this.tagList = []
     }
     next()
+  },
+  methods: {
+    ...mapActions({
+      createArticle: CREATE_ARTICLE,
+      updateArticle: UPDATE_ARTICLE
+    }),
+    async submitArticle () {
+      const {title, description, body} = this
+      const tagList = this.tagList.map((tag) => tag.content)
+
+      let {slug} = this.$route.params
+      let article
+      if (slug) {
+        article = await this.updateArticle({slug, article: {title, description, body, tagList}})
+      } else {
+        article = await this.createArticle({title, description, body, tagList})
+      }
+
+      this.$router.push({name: 'Article', params: {slug: article.data.article.slug}})
+    }
   }
 }
 </script>

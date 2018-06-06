@@ -67,7 +67,7 @@ import ArticleMeta from '@/components/ArticleMeta'
 import CommentEditor from '@/components/CommentEditor'
 import ListArticleComment from '@/components/ListArticleComment'
 export default {
-  props: ['id'],
+  props: ['slug'],
   components: {
     ArticleMeta,
     ListArticleComment,
@@ -86,8 +86,8 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch(FETCH_ARTICLE, this.id)
-    this.$store.dispatch(FETCH_COMMENT, this.id)
+    this.$store.dispatch(FETCH_ARTICLE, this.slug)
+    this.$store.dispatch(FETCH_COMMENT, this.slug)
   }
 }
 </script>

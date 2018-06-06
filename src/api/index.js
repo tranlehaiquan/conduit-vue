@@ -98,6 +98,12 @@ export const Article = {
   },
   deleteArticle (slug) {
     return ApiService.delete(`articles/${slug}`)
+  },
+  updateArticle (slug, article) {
+    return ApiService.put(`articles/${slug}`, {article})
+  },
+  createArticle (article) {
+    return ApiService.post('articles', {article})
   }
 }
 

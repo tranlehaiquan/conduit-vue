@@ -8,7 +8,9 @@ import {
   UNFAVORITE_ARTICLE,
   ADD_COMMENT,
   REMOVE_COMMENT,
-  DELETE_ARTICLE
+  DELETE_ARTICLE,
+  UPDATE_ARTICLE,
+  CREATE_ARTICLE
 } from '@/store/actions.type'
 import {
   START_LOAD_ARTICLE,
@@ -106,6 +108,13 @@ const actions = {
   },
   [DELETE_ARTICLE] ({commit}, slug) {
     return Article.deleteArticle(slug)
+  },
+  [UPDATE_ARTICLE] ({commit}, payload) {
+    const {slug, article} = payload
+    return Article.updateArticle(slug, article)
+  },
+  [CREATE_ARTICLE] ({commit}, article) {
+    return Article.createArticle(article)
   }
 }
 
