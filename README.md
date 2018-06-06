@@ -2,7 +2,7 @@
 
 > Vuejs spa real world example (CRUD, auth) use [RealWorld](https://github.com/gothinkster/realworld) spec API
 
-It has already had one project in [here](https://github.com/gothinkster/vue-realworld-example-app) but I want start from begin so i made this project.
+It has already had one project in [here](https://github.com/gothinkster/vue-realworld-example-app) but I want start from begin to practice So i made this project.
 
 ## Links
 
