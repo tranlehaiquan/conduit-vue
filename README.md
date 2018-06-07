@@ -2,6 +2,8 @@
 
 > Vuejs spa real world example (CRUD, auth) use [RealWorld](https://github.com/gothinkster/realworld) spec API
 
+Live demo: [https://vue-pet-projecet.netlify.com/](https://vue-pet-projecet.netlify.com/)
+
 It has already had one project in [here](https://github.com/gothinkster/vue-realworld-example-app) but I want start from begin to practice So i made this project.
 
 ## Links
