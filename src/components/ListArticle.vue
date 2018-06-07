@@ -18,7 +18,9 @@
         No articles are here... yet.
       </div>
     </template>
-    <the-pagination v-model="offset" :pageCount="pageCount"></the-pagination>
+    <div style="text-align: center">
+      <the-pagination v-model="offset" :pageCount="pageCount"></the-pagination>
+    </div>
   </div>
 </template>
 <script>

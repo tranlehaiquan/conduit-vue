@@ -7,10 +7,12 @@
       </div>
     </div>
 
-    <div v-if="tags.length" class="tags">
-      <span v-for="tag in tags" :key="tag.key" @click="remove(tag.key)" class="tags__item">
-        {{tag.content}} <i class="ion-close-round"></i>
-      </span>
+    <div class="tags">
+        <transition-group name="fade" tag="div">
+          <span v-for="tag in tags" :key="tag.key" @click="remove(tag.key)" class="tags__item">
+            {{tag.content}} <i class="ion-close-round"></i>
+          </span>
+        </transition-group>
     </div>
   </div>
 </template>
@@ -96,5 +98,11 @@ export default {
   }
   .tags__item i {
     margin-left: 0.1em;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 </style>
