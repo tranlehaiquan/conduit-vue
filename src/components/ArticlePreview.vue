@@ -1,9 +1,9 @@
 <template>
   <div class="article-preview">
     <div class="article-meta">
-      <a href="profile.html">
+      <router-link :to="{name: 'ProfileArticles', params: {username: article.author.username}}">
         <img :src="article.author.image" />
-      </a>
+      </router-link>
       <div class="info">
         <router-link :to="{name: 'ProfileArticles', params: {username: article.author.username}}" class="author">{{article.author.username}}</router-link>
         <span class="date">{{article.createdAt}}</span>
