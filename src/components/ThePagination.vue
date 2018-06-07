@@ -2,7 +2,7 @@
   <nav>
     <ul class="pagination" v-if="pageCount > 1">
       <li
-        v-for="page in pagination(value, pageCount)"
+        v-for="page in pagination"
         :key="page"
         class="page-item"
         :class="isActive(page) && 'active'"
@@ -40,11 +40,13 @@ export default {
     isActive (page) {
       if (page === this.value + 1) return true
       return false
-    },
-    pagination (c, m) {
-      let current = c
-      let last = m
-      let delta = 2
+    }
+  },
+  computed: {
+    pagination () {
+      let current = this.value
+      let last = this.pageCount
+      let delta = 3
       let left = current - delta
       let right = current + delta + 1
       let range = []
@@ -71,8 +73,6 @@ export default {
 
       return rangeWithDots
     }
-  },
-  computed: {
   }
 }
 </script>
