@@ -1,6 +1,9 @@
 <template>
   <nav>
     <ul class="pagination" v-if="pageCount > 1">
+      <li @click.prevent="previousPage" :class="isFirst && 'disabled'" class="page-item">
+        <a class="page-link" href>Previous</a>
+      </li>
       <li
         v-for="page in pagination"
         :key="page"
@@ -14,6 +17,9 @@
         <template v-else>
           <a class="page-link">...</a>
         </template>
+      </li>
+      <li @click.prevent="nextPage" :class="isLast && 'disabled'" class="page-item">
+        <a class="page-link" href>Next</a>
       </li>
     </ul>
   </nav>
@@ -40,6 +46,12 @@ export default {
     isActive (page) {
       if (page === this.value + 1) return true
       return false
+    },
+    previousPage () {
+      this.$emit('change', this.value - 1)
+    },
+    nextPage () {
+      this.$emit('change', this.value + 1)
     }
   },
   computed: {
@@ -72,6 +84,12 @@ export default {
       }
 
       return rangeWithDots
+    },
+    isFirst () {
+      return this.value === 0
+    },
+    isLast () {
+      return this.value === (this.pageCount - 1)
     }
   }
 }
