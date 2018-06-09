@@ -14,9 +14,9 @@ It has already had one project in [here](https://github.com/gothinkster/vue-real
 
 ## Todo
 
-- Add load effect for almost all action
-- Add effect when route bettween view
-- Add error alert for action
+- [ ] Add load effect for almost all action
+- [ ] Add effect when route bettween view
+- [ ] Add error alert for action
 
 ## Build Setup
 
