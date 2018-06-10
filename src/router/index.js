@@ -23,7 +23,7 @@ export default new Router({
       children: [
         {path: '/', component: HomeGlobal, name: 'Home'},
         {path: 'feed', component: HomeFeed},
-        {path: 'tag/:tag', component: HomeTag}
+        {path: 'tag/:tag', component: HomeTag, meta: { requiresAuth: true }}
       ]
     },
     {
@@ -35,7 +35,8 @@ export default new Router({
     {
       path: '/editor/:slug?',
       name: 'EditorArticle',
-      component: EditorArticle
+      component: EditorArticle,
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
@@ -50,7 +51,8 @@ export default new Router({
     {
       path: '/setting',
       name: 'Setting',
-      component: Setting
+      component: Setting,
+      meta: { requiresAuth: true }
     },
     {
       path: '/profile/:username',

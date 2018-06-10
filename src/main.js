@@ -9,6 +9,22 @@ import store from '@/store'
 Vue.config.productionTip = false
 ApiService.init()
 
+router.beforeEach((to, from, next) => {
+  const {user} = store.state.authentication
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!user.username) {
+      next({
+        name: 'SignIn',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
 store.dispatch('CHECK_AUTH')
   .then(() => {
     /* eslint-disable no-new */

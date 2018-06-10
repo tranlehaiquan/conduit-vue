@@ -43,7 +43,12 @@ export default {
       const {email, password} = this
       this.$store.dispatch(LOGIN_ACCOUNT, {user: {email, password}})
         .then(() => {
-          this.$router.push({name: 'Home'})
+          const {redirect} = this.$route.query
+          if (redirect) {
+            this.$router.push({path: redirect})
+          } else {
+            this.$router.push({name: 'Home'})
+          }
         })
         .catch(({response}) => {
           this.errors = response.data.errors
