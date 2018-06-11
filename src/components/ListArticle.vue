@@ -3,8 +3,8 @@
     <template v-if="articles.isLoading ? limit : articles.data.length">
       <article-preview
         v-for="(article, index) in articlesData"
-        :key="article.slug + index"
-        :article="article"
+        :key="articles.isLoading ? index :article.slug + index"
+        :article="articles.isLoading ? {} : article"
         :showPlaceholder="articles.isLoading"
       >
       </article-preview>
@@ -14,7 +14,7 @@
         No articles are here... yet.
       </div>
     </template>
-    <div style="text-align: center">
+    <div class="text-xs-center">
       <the-pagination v-model="offset" :pageCount="pageCount"></the-pagination>
     </div>
   </div>
@@ -51,15 +51,14 @@ export default {
     ThePagination
   },
   created () {
-    const query = Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
-    this.$store.dispatch(FETCH_ARTICLES, query)
+    this.fetchNewArticle(this.queryString)
   },
   watch: {
     offset () {
-      this.fetchNewArticle()
+      this.fetchNewArticle(this.queryString)
     },
     query () {
-      this.fetchNewArticle()
+      this.fetchNewArticle(this.queryString)
     }
   },
   computed: {
@@ -87,6 +86,7 @@ export default {
       if (!this.feed) {
         this.fetchArticle(query)
       } else {
+        console.log('here')
         this.fetchFeedArticle(query)
       }
     }
