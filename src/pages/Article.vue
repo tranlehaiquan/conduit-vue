@@ -65,12 +65,12 @@ import {mapState, mapActions} from 'vuex'
 import {FETCH_ARTICLE, FETCH_COMMENT} from '@/store/actions.type'
 import ArticleMeta from '@/components/ArticleMeta'
 import CommentEditor from '@/components/CommentEditor'
-import ListArticleComment from '@/components/ListArticleComment'
+import ListComment from '@/components/ListComment'
 export default {
   props: ['slug'],
   components: {
     ArticleMeta,
-    ListArticleComment,
+    ListComment,
     CommentEditor
   },
   computed: {
