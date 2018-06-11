@@ -4,6 +4,7 @@
     <div class="row">
 
       <div class="col-md-10 offset-md-1 col-xs-12">
+        <the-error :errors="errors"></the-error>
         <form>
           <fieldset>
             <fieldset class="form-group">
@@ -34,9 +35,11 @@ import {mapActions} from 'vuex'
 import TheInputTags from '@/components/TheInputTags'
 import store from '@/store'
 import {UPDATE_ARTICLE, CREATE_ARTICLE} from '@/store/actions.type'
+import TheError from '@/components/TheError'
 export default {
   components: {
-    TheInputTags
+    TheInputTags,
+    TheError
   },
   props: {
     slug: {
@@ -49,7 +52,8 @@ export default {
       title: '',
       description: '',
       body: '',
-      tagList: []
+      tagList: [],
+      errors: {}
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -105,13 +109,17 @@ export default {
 
       let {slug} = this.$route.params
       let article
-      if (slug) {
-        article = await this.updateArticle({slug, article: {title, description, body, tagList}})
-      } else {
-        article = await this.createArticle({title, description, body, tagList})
-      }
+      try {
+        if (slug) {
+          article = await this.updateArticle({slug, article: {title, description, body, tagList}})
+        } else {
+          article = await this.createArticle({title, description, body, tagList})
+        }
 
-      this.$router.push({name: 'Article', params: {slug: article.data.article.slug}})
+        this.$router.push({name: 'Article', params: {slug: article.data.article.slug}})
+      } catch ({response}) {
+        this.errors = response.data.errors
+      }
     }
   }
 }
