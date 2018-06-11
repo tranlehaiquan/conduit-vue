@@ -20,24 +20,7 @@
       </div>
 
       <div class="col-md-3">
-        <div class="sidebar">
-          <p>Popular Tags</p>
-
-          <div class="tag-list">
-            <template v-if="tags.isLoading">
-              <p>Loading...</p>
-            </template>
-            <template v-else>
-              <router-link
-                v-for='tag in tags.data'
-                :key="tag"
-                :to="{path: '/tag/'+tag}"
-                class="tag-pill tag-default">
-                {{tag}}
-              </router-link>
-            </template>
-          </div>
-        </div>
+        <the-aside-tags></the-aside-tags>
       </div>
 
     </div>
@@ -46,24 +29,15 @@
 </div>
 </template>
 <script>
-import ArticlePreview from '@/components/ArticlePreview.vue'
+import TheAsideTags from '@/components/TheAsideTags.vue'
 import HomeArtcileNav from '@/components/HomeArtcileNav.vue'
-import {FETCH_TAGS} from '@/store/actions.type'
 export default {
   components: {
-    ArticlePreview,
-    HomeArtcileNav
+    HomeArtcileNav,
+    TheAsideTags
   },
   data () {
     return {}
-  },
-  created () {
-    this.$store.dispatch(FETCH_TAGS)
-  },
-  computed: {
-    tags () {
-      return this.$store.state.home.tags
-    }
   }
 }
 </script>
