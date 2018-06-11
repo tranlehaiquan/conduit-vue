@@ -23,7 +23,7 @@ export default new Router({
       children: [
         {path: '/', component: HomeGlobal, name: 'Home'},
         {path: 'feed', component: HomeFeed, meta: { requiresAuth: true }},
-        {path: 'tag/:tag', component: HomeTag}
+        {path: 'tag/:tag', component: HomeTag, props: true}
       ]
     },
     {

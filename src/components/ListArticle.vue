@@ -24,7 +24,8 @@
   </div>
 </template>
 <script>
-import {FETCH_ARTICLES} from '@/store/actions.type'
+import {mapActions} from 'vuex'
+import {FETCH_ARTICLES, FETCH_FEED_ARTICLES} from '@/store/actions.type'
 import ThePagination from '@/components/ThePagination'
 import ArticlePreview from '@/components/ArticlePreview'
 export default {
@@ -38,6 +39,10 @@ export default {
     limit: {
       type: Number,
       default: 10
+    },
+    feed: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -55,12 +60,10 @@ export default {
   },
   watch: {
     offset () {
-      const query = this.queryString
-      this.$store.dispatch(FETCH_ARTICLES, query)
+      this.fetchNewArticle()
     },
     query () {
-      const query = this.queryString
-      this.$store.dispatch(FETCH_ARTICLES, query)
+      this.fetchNewArticle()
     }
   },
   computed: {
@@ -72,6 +75,20 @@ export default {
     },
     queryString () {
       return Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
+    }
+  },
+  methods: {
+    ...mapActions({
+      fetchArticle: FETCH_ARTICLES,
+      fetchFeedArticle: FETCH_FEED_ARTICLES
+    }),
+    fetchNewArticle () {
+      const query = this.queryString
+      if (!this.feed) {
+        this.fetchArticle(query)
+      } else {
+        this.fetchFeedArticle(query)
+      }
     }
   }
 }
