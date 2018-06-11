@@ -1,15 +1,11 @@
 <template>
   <div>
-    <template v-if="articles.isLoading">
-      <div class="article-preview">
-        Loading...
-      </div>
-    </template>
-    <template v-else-if="articles.data.length">
+    <template v-if="articles.isLoading ? limit : articles.data.length">
       <article-preview
-        v-for="(article, index) in articles.data"
+        v-for="(article, index) in articlesData"
         :key="article.slug + index"
         :article="article"
+        :showPlaceholder="articles.isLoading"
       >
       </article-preview>
     </template>
@@ -75,6 +71,10 @@ export default {
     },
     queryString () {
       return Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
+    },
+    articlesData () {
+      if (this.articles.isLoading) return this.limit
+      return this.articles.data
     }
   },
   methods: {
