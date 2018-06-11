@@ -5,8 +5,8 @@
         <a class="page-link" href>Previous</a>
       </li>
       <li
-        v-for="page in pagination"
-        :key="page"
+        v-for="(page, index) in pagination"
+        :key="page + index"
         class="page-item"
         :class="isActive(page) && 'active'"
         @click.prevent="changePage(page)"
