@@ -22,8 +22,8 @@ export default new Router({
       component: Home,
       children: [
         {path: '/', component: HomeGlobal, name: 'Home'},
-        {path: 'feed', component: HomeFeed},
-        {path: 'tag/:tag', component: HomeTag, meta: { requiresAuth: true }}
+        {path: 'feed', component: HomeFeed, meta: { requiresAuth: true }},
+        {path: 'tag/:tag', component: HomeTag}
       ]
     },
     {
