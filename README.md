@@ -17,7 +17,7 @@ It has already had one project in [here](https://github.com/gothinkster/vue-real
 - [ ] Add load effect for almost all action
 - [ ] Add effect when route bettween view
 - [ ] Add error alert for action
-- [ ] Guarantee route authentication
+- [x] Guarantee route authentication
 
 ## Build Setup
 
