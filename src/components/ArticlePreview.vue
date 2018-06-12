@@ -29,23 +29,14 @@
       </router-link>
     </template>
     <template v-else>
-      <div class="loading">
-        <div class="loading__avatar"></div>
-        <div class="loading__metas">
-          <div class="loading__meta"></div>
-          <div class="loading__meta"></div>
-        </div>
-        <div class='loading__text'></div>
-        <div class='loading__text'></div>
-        <div class='loading__text'></div>
-        <div class='loading__text'></div>
-      </div>
+      <the-place-holder :isArticlePreview="true"></the-place-holder>
     </template>
   </div>
 </template>
 <script>
 import {mapActions} from 'vuex'
 import {FAVORITE_ARTICLE, UNFAVORITE_ARTICLE} from '@/store/actions.type'
+import ThePlaceHolder from '@/components/ThePlaceHolder'
 export default {
   props: {
     article: {
@@ -56,6 +47,9 @@ export default {
       type: Boolean,
       default: true
     }
+  },
+  components: {
+    ThePlaceHolder
   },
   computed: {
     isFavoritedClass () {
@@ -78,69 +72,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.loading {
-  position: relative;
-}
-.loading__text {
-  height: 10px;
-  margin: 10px;
-  -webkit-animation: pulse 1s infinite ease-in-out;
-          animation: pulse 1s infinite ease-in-out;
-}
-.loading__text:nth-of-type(1) {
-  width: 85%;
-}
-.loading__text:nth-of-type(5) {
-  width: 85%;
-}
-.loading__text:nth-of-type(9) {
-  width: 85%;
-}
-.loading__text:nth-of-type(2) {
-  width: 80%;
-}
-.loading__text:nth-of-type(6) {
-  width: 80%;
-}
-.loading__text:nth-of-type(10) {
-  width: 80%;
-}
-.loading__text:nth-of-type(3) {
-  width: 75%;
-}
-.loading__text:nth-of-type(7) {
-  width: 75%;
-}
-.loading__text:nth-of-type(4) {
-  width: 65%;
-}
-.loading__text:nth-of-type(8) {
-  width: 65%;
-}
-.loading__avatar {
-  height: 50px;
-  width: 50px;
-  -webkit-animation: pulse 1s infinite ease-in-out;
-          animation: pulse 1s infinite ease-in-out;
-  margin: 10px;
-}
-.loading__meta {
-  height: 10px;
-  margin: 10px;
-  -webkit-animation: pulse 1s infinite ease-in-out;
-          animation: pulse 1s infinite ease-in-out;
-}
-.loading__meta:nth-of-type(1) {
-  width: 50px;
-}
-.loading__meta:nth-of-type(2) {
-  width: 70px;
-}
-.loading__metas {
-  position: absolute;
-  top: 0;
-  left: 60px;
-}
-</style>
