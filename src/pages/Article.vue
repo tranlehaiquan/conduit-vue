@@ -50,7 +50,7 @@
               <router-link :to="{name: 'SignUp'}">sign up</router-link> to add comments on this article.
             </p>
           </template>
-          <list-article-comment :comments="comments" :slug="article.data.slug"></list-article-comment>
+          <list-comment :comments="comments" :slug="article.data.slug"></list-comment>
         </div>
 
       </div>
