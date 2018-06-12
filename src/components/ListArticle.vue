@@ -86,7 +86,6 @@ export default {
       if (!this.feed) {
         this.fetchArticle(query)
       } else {
-        console.log('here')
         this.fetchFeedArticle(query)
       }
     }

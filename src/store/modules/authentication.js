@@ -73,7 +73,6 @@ const actions = {
   },
   [UPDATE_PROFILE] ({commit, state}, user) {
     let {email, username, password, image, bio} = user
-    console.log(password, '?')
     if (!password) password = state.user.password
     return Auth.updateProfile({email, username, password, image, bio})
       .then(({data}) => {
