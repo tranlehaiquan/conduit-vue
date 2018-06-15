@@ -51,23 +51,23 @@ const actions = {
         commit(END_LOAD_ARTICLE, data.article)
       })
   },
-  [FAVORITE_ARTICLE] ({commit}, slug) {
-    Article.favorite(slug)
-      .then(({data}) => {
-        commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
-        commit(SET_ARTICLE, data.article)
-      })
-      .catch(({response}) => {
-      })
+  async [FAVORITE_ARTICLE] ({commit}, slug) {
+    try {
+      const {data} = await Article.favorite(slug)
+      commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
+      commit(SET_ARTICLE, data.article)
+    } catch (errors) {
+      return Promise.reject(errors)
+    }
   },
-  [UNFAVORITE_ARTICLE] ({commit}, slug) {
-    Article.unFavorite(slug)
-      .then(({data}) => {
-        commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
-        commit(SET_ARTICLE, data.article)
-      })
-      .catch(({response}) => {
-      })
+  async [UNFAVORITE_ARTICLE] ({commit}, slug) {
+    try {
+      const {data} = await Article.unFavorite(slug)
+      commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
+      commit(SET_ARTICLE, data.article)
+    } catch (errors) {
+      return Promise.reject(errors)
+    }
   },
   [FETCH_COMMENT] ({commit}, slug) {
     commit(UPDATE_COMMENT, {data: [], isLoading: true})

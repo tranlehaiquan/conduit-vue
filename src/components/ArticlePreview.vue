@@ -9,13 +9,14 @@
           <router-link :to="{name: 'ProfileArticles', params: {username: article.author.username}}" class="author">{{article.author.username}}</router-link>
           <span class="date">{{article.createdAt}}</span>
         </div>
-        <button
+        <the-button
           @click="toggleFavorite"
           :class="isFavoritedClass"
-          class="btn btn-outline-primary btn-sm pull-xs-right"
+          :loading="favoriteLoading"
+          class="btn-outline-primary btn-sm pull-xs-right"
         >
           <i class="ion-heart"></i> {{article.favoritesCount}}
-        </button>
+        </the-button>
       </div>
       <router-link :to="{path: '/articles/'+ article.slug}" class="preview-link clearfix">
         <h3>{{article.title}}</h3>
@@ -37,6 +38,7 @@
 import {mapActions} from 'vuex'
 import {FAVORITE_ARTICLE, UNFAVORITE_ARTICLE} from '@/store/actions.type'
 import ThePlaceHolder from '@/components/ThePlaceHolder'
+import TheButton from '@/components/TheButton'
 export default {
   props: {
     article: {
@@ -48,8 +50,14 @@ export default {
       default: true
     }
   },
+  data () {
+    return {
+      favoriteLoading: false
+    }
+  },
   components: {
-    ThePlaceHolder
+    ThePlaceHolder,
+    TheButton
   },
   computed: {
     isFavoritedClass () {
@@ -57,13 +65,19 @@ export default {
     }
   },
   methods: {
-    toggleFavorite () {
+    async toggleFavorite () {
       if (!this.$store.state.authentication.isLogin) {
         this.$router.push({name: 'SignIn'})
         return
       }
-      if (!this.article.favorited) this.favorite(this.article.slug)
-      else this.unfavorite(this.article.slug)
+      this.favoriteLoading = true
+
+      if (!this.article.favorited) await this.favorite(this.article.slug)
+      else {
+        await this.unfavorite(this.article.slug)
+      }
+
+      this.favoriteLoading = false
     },
     ...mapActions({
       favorite: FAVORITE_ARTICLE,
