@@ -14,12 +14,22 @@
 
     <template v-else-if="isTags">
       <div class="loading__tags">
-        <div v-for="(item, index) in 15" :key="index" class="loading__tag"></div>
+        <div
+          v-for="(item, index) in 15"
+          :key="index"
+          class="loading__tag"
+        >
+        </div>
       </div>
     </template>
 
     <template v-else>
-      <div v-for="(item, index) in contentLine" :key="index" class="loading__text"></div>
+      <div
+        v-for="(item, index) in contentLine"
+        :key="index"
+        class="loading__text"
+      >
+      </div>
     </template>
   </div>
 </template>

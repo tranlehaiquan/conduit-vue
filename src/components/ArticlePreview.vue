@@ -14,8 +14,9 @@
           :class="isFavoritedClass"
           :loading="favoriteLoading"
           class="btn-outline-primary btn-sm pull-xs-right"
+          :icon="'ion-heart'"
         >
-          <i class="ion-heart"></i> {{article.favoritesCount}}
+          {{article.favoritesCount}}
         </the-button>
       </div>
       <router-link :to="{path: '/articles/'+ article.slug}" class="preview-link clearfix">

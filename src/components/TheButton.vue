@@ -5,11 +5,12 @@
     :disabled="disable || loading"
   >
     <template v-if="loading">
-      <i class="ion-refresh icon-loading"></i>
+      <i v-if="loading" class="ion-refresh icon-loading"></i>
     </template>
-    <template v-else>
-      <slot></slot>
+    <template v-if="icon && !loading">
+      <i :class="icon"></i>
     </template>
+    <slot></slot>
   </button>
 </template>
 
@@ -23,6 +24,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    icon: {
+      type: String,
+      default: ''
     }
   },
   methods: {

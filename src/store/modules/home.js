@@ -15,7 +15,18 @@ import {
 
 const state = {
   articles: {
-    data: [],
+    data: {
+      author: {},
+      body: "",
+      createdAt: "",
+      description: "",
+      favorited: false,
+      favoritesCount: 0,
+      slug: "",
+      tagList: [],
+      title: "",
+      updatedAt: ""
+    },
     articlesCount: 0,
     error: ''
   },
@@ -62,7 +73,7 @@ const mutations = {
       if (articleIndex.slug !== article.slug) return articleIndex
 
       const {favorited, favoritesCount} = article
-      return {favorited, favoritesCount}
+      return Object.assign({}, articleIndex, {favorited, favoritesCount})
     })
   }
 }
