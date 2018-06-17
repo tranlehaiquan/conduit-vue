@@ -3,7 +3,7 @@
     <p>Popular Tags</p>
 
     <div class="tag-list">
-      <template v-if="tags.isLoading">
+      <template v-if="loading">
         <the-place-holder :isTags="true"></the-place-holder>
       </template>
       <template v-else>
@@ -23,8 +23,10 @@
 import ThePlaceHolder from '@/components/ThePlaceHolder'
 import {FETCH_TAGS} from '@/store/actions.type'
 export default {
-  created () {
-    this.$store.dispatch(FETCH_TAGS)
+  async created () {
+    this.loading = true
+    await this.$store.dispatch(FETCH_TAGS)
+    this.loading = false
   },
   computed: {
     tags () {
@@ -33,6 +35,11 @@ export default {
   },
   components: {
     ThePlaceHolder
+  },
+  data () {
+    return {
+      loading: true
+    }
   }
 }
 </script>

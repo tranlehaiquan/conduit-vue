@@ -1,11 +1,11 @@
 <template>
   <div>
-    <template v-if="articles.isLoading ? limit : articles.data.length">
+    <template v-if="loading ? limit : articles.data.length">
       <article-preview
         v-for="(article, index) in articlesData"
-        :key="articles.isLoading ? index :article.slug + index"
-        :article="articles.isLoading ? {} : article"
-        :showPlaceholder="articles.isLoading"
+        :key="loading ? index :article.slug + index"
+        :article="loading ? {} : article"
+        :showPlaceholder="loading"
       >
       </article-preview>
     </template>
@@ -43,7 +43,8 @@ export default {
   },
   data () {
     return {
-      offset: 0
+      offset: 0,
+      loading: true
     }
   },
   components: {
@@ -72,7 +73,7 @@ export default {
       return Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
     },
     articlesData () {
-      if (this.articles.isLoading) return this.limit
+      if (this.loading) return this.limit
       return this.articles.data
     }
   },
@@ -81,13 +82,14 @@ export default {
       fetchArticle: FETCH_ARTICLES,
       fetchFeedArticle: FETCH_FEED_ARTICLES
     }),
-    fetchNewArticle () {
-      const query = this.queryString
+    async fetchNewArticle () {
+      this.loading = true
       if (!this.feed) {
-        this.fetchArticle(query)
+        await this.fetchArticle(this.queryString)
       } else {
-        this.fetchFeedArticle(query)
+        await this.fetchFeedArticle(this.queryString)
       }
+      this.loading = false
     }
   }
 }

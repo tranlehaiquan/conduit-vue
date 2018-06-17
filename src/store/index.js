@@ -19,7 +19,8 @@ const store = new Vuex.Store({
     authentication,
     article,
     profile
-  }
+  },
+  strict: true
 })
 
 export default store
