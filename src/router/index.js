@@ -37,6 +37,7 @@ export default new Router({
       path: '/editor/:slug?',
       name: 'EditorArticle',
       component: EditorArticle,
+      props: true,
       meta: { requiresAuth: true }
     },
     {

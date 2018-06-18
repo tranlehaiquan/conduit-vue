@@ -17,15 +17,15 @@ const state = {
   articles: {
     data: {
       author: {},
-      body: "",
-      createdAt: "",
-      description: "",
+      body: '',
+      createdAt: '',
+      description: '',
       favorited: false,
       favoritesCount: 0,
-      slug: "",
+      slug: '',
       tagList: [],
-      title: "",
-      updatedAt: ""
+      title: '',
+      updatedAt: ''
     },
     articlesCount: 0,
     error: ''

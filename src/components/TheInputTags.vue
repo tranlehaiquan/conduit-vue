@@ -1,18 +1,32 @@
 <template>
   <div>
     <div class="input-group">
-      <input @keydown.enter="submitTag" v-model="input" type="text" :placeholder="error || 'Enter tags'" class="form-control">
+      <input
+        @keydown.enter="submitTag"
+        v-model="input"
+        type="text"
+        :placeholder="error || 'Enter tags'"
+        class="form-control"
+        :disabled="disabled"
+      >
       <div class="input-group-btn">
-        <button @click="submitTag" class="btn btn-outline-secondary" type="button">Add Tag</button>
+        <button
+          @click="submitTag"
+          class="btn btn-outline-secondary"
+          type="button"
+          :disabled="disabled"
+        >
+          Add Tag
+        </button>
       </div>
     </div>
 
     <div class="tags">
-        <transition-group name="fade" tag="div">
-          <span v-for="tag in tags" :key="tag.key" @click="remove(tag.key)" class="tags__item">
-            {{tag.content}} <i class="ion-close-round"></i>
-          </span>
-        </transition-group>
+      <transition-group name="fade" tag="div">
+        <span v-for="tag in tags" :key="tag.key" @click="remove(tag.key)" class="tags__item">
+          {{tag.content}} <i class="ion-close-round"></i>
+        </span>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -29,6 +43,10 @@ export default {
       default: function () {
         return []
       }
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

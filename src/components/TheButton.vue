@@ -3,6 +3,7 @@
     class="btn"
     @click="handleClick"
     :disabled="disable || loading"
+    :type="nativeType"
   >
     <template v-if="loading">
       <i v-if="loading" class="ion-refresh icon-loading"></i>
@@ -26,6 +27,10 @@ export default {
       default: false
     },
     icon: {
+      type: String,
+      default: ''
+    },
+    nativeType: {
       type: String,
       default: ''
     }
