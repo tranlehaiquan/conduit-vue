@@ -10,14 +10,29 @@
           <the-error :errors="errors"></the-error>
           <form @submit.prevent="login">
             <fieldset class="form-group">
-              <input type="text" v-model="email" placeholder="Email" class="form-control form-control-lg">
+              <input
+                type="text"
+                v-model="email"
+                placeholder="Email"
+                class="form-control form-control-lg"
+                :disabled="loading"
+              >
             </fieldset>
             <fieldset class="form-group">
-              <input type="password" v-model="password" placeholder="Password" class="form-control form-control-lg">
+              <input
+                type="password"
+                v-model="password"
+                placeholder="Password"
+                class="form-control form-control-lg"
+                :disabled="loading"
+              >
             </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
+            <the-button
+              class="btn-lg btn-primary pull-xs-right"
+              :loading="loading"
+            >
               Sign in
-            </button>
+            </the-button>
           </form>
         </div>
       </div>
@@ -26,40 +41,43 @@
 </template>
 <script>
 import {LOGIN_ACCOUNT, LOGOUT_ACCOUNT} from '@/store/actions.type.js'
+import {mapActions} from 'vuex'
 import TheError from '@/components/TheError'
+import TheButton from '@/components/TheButton'
 export default {
   components: {
-    TheError
+    TheError,
+    TheButton
   },
   data () {
     return {
       email: '',
       password: '',
-      errors: {}
+      errors: {},
+      loading: false
     }
   },
   methods: {
-    login () {
+    ...mapActions({
+      loginAccount: LOGIN_ACCOUNT,
+      logoutAccount: LOGOUT_ACCOUNT
+    }),
+    async login () {
       const {email, password} = this
-      this.$store.dispatch(LOGIN_ACCOUNT, {user: {email, password}})
-        .then(() => {
-          const {redirect} = this.$route.query
-          if (redirect) {
-            this.$router.push({path: redirect})
-          } else {
-            this.$router.push({name: 'Home'})
-          }
-        })
-        .catch(({response}) => {
-          this.errors = response.data.errors
-        })
-    },
-    logout () {
-      this.$store.dispatch(LOGOUT_ACCOUNT)
+      this.loading = true
+      try {
+        await this.loginAccount({user: {email, password}})
+        const {redirect} = this.$route.query
+        if (redirect) this.$router.push({path: redirect})
+        else this.$router.push({name: 'Home'})
+      } catch ({response}) {
+        this.errors = response.data.errors
+      }
+      this.loading = false
     }
   },
   created () {
-    this.logout()
+    this.logoutAccount()
   }
 }
 </script>

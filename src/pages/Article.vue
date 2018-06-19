@@ -1,7 +1,7 @@
 <template>
   <div class="article-page">
     <div class="banner">
-      <div class="container" v-if="article.isLoading">
+      <div class="container" v-if="loadingArticle">
         Is loading...
       </div>
       <div v-else class="container">
@@ -16,14 +16,14 @@
 
     <div class="container page">
       <the-article-content
-        :isLoading="article.isLoading"
+        :isLoading="loadingArticle"
         :content="article.data.body"
       />
 
       <hr />
 
       <div class="article-actions">
-        <template v-if="!article.isLoading">
+        <template v-if="!loadingArticle">
           <article-meta
             :article="article.data"
           >
@@ -46,7 +46,13 @@
               <router-link :to="{name: 'SignUp'}">sign up</router-link> to add comments on this article.
             </p>
           </template>
-          <list-comment :comments="comments" :slug="article.data.slug"></list-comment>
+
+          <template v-if="loadingComments">
+            <p>Loading Comments</p>
+          </template>
+          <template v-else>
+            <list-comment :comments="comments" :slug="article.data.slug"></list-comment>
+          </template>
         </div>
 
       </div>
@@ -72,8 +78,8 @@ export default {
   },
   data () {
     return {
-      loadingArticle: false,
-      loadingComments: false
+      loadingArticle: true,
+      loadingComments: true
     }
   },
   computed: {
@@ -85,9 +91,13 @@ export default {
       return this.$store.state.authentication.isLogin
     }
   },
-  async created () {
+  created () {
+    this.loadingArticle = true
+    this.loadingComments = true
     this.fetchArticle(this.slug)
+      .then(() => { this.loadingArticle = false })
     this.fetchComment(this.slug)
+      .then(() => { this.loadingComments = false })
   },
   methods: {
     ...mapActions({
