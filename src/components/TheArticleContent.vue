@@ -1,6 +1,6 @@
 <template>
   <div class="row article-content">
-    <div v-if="!isLoading" class="col-md-12" v-html="content">
+    <div v-if="!isLoading" class="col-md-12" v-html="contentHTML">
     </div>
     <div v-else class="col-md-12">
       <the-place-holder></the-place-holder>
