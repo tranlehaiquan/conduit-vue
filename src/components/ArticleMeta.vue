@@ -1,10 +1,17 @@
 <template>
   <div class="article-meta" v-if="article">
-    <a href="">
+    <router-link
+        :to="{name: 'ProfileArticles', params: {username: article.author.username}}"
+      >
       <img :src="article.author.image" />
-    </a>
+    </router-link>
     <div class="info">
-      <a href="" class="author">{{article.author.username}}</a>
+      <router-link
+        :to="{name: 'ProfileArticles', params: {username: article.author.username}}"
+        class="author"
+      >
+        {{ article.author.username }}
+      </router-link>
       <span class="date">Create at {{article.createdAt}}</span>
     </div>
 
