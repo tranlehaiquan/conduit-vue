@@ -15,7 +15,10 @@
     </div>
 
     <div class="container page">
-      <the-article-content :isLoading="article.isLoading" :content="article.data.body"></the-article-content>
+      <the-article-content
+        :isLoading="article.isLoading"
+        :content="article.data.body"
+      />
 
       <hr />
 
@@ -67,6 +70,12 @@ export default {
     CommentEditor,
     TheArticleContent
   },
+  data () {
+    return {
+      loadingArticle: false,
+      loadingComments: false
+    }
+  },
   computed: {
     ...mapState({
       article: state => state.article.article,
@@ -76,8 +85,8 @@ export default {
       return this.$store.state.authentication.isLogin
     }
   },
-  mounted () {
-    if (this.slug !== this.article.data.slug) this.fetchArticle(this.slug)
+  async created () {
+    this.fetchArticle(this.slug)
     this.fetchComment(this.slug)
   },
   methods: {
