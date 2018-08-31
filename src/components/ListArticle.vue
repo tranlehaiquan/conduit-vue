@@ -20,8 +20,8 @@
   </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
-import {FETCH_ARTICLES, FETCH_FEED_ARTICLES} from '@/store/actions.type'
+import { mapActions } from 'vuex'
+import { FETCH_ARTICLES, FETCH_FEED_ARTICLES } from '@/store/actions.type'
 import ThePagination from '@/components/ThePagination'
 import ArticlePreview from '@/components/ArticlePreview'
 export default {
@@ -70,7 +70,7 @@ export default {
       return Math.round(this.articles.articlesCount / this.limit)
     },
     queryString () {
-      return Object.assign({}, this.query, {limit: this.limit, offset: this.offset})
+      return Object.assign({}, this.query, { limit: this.limit, offset: this.offset })
     },
     articlesData () {
       if (this.loading) return this.limit

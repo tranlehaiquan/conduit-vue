@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {REMOVE_COMMENT} from '@/store/actions.type'
+import { REMOVE_COMMENT } from '@/store/actions.type'
 export default {
   props: {
     slug: {
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     removeComment () {
-      const {slug, comment} = this
+      const { slug, comment } = this
       this.$store.dispatch(REMOVE_COMMENT, {
         slug,
         id: comment.id

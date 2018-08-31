@@ -1,6 +1,6 @@
 import { Profile } from '@/api'
-import {FOLLOW_USER, UNFOLLOW_USER, FETCH_PROFILE, COPY_PROFILE} from '@/store/actions.type'
-import {SET_PROFILE} from '@/store/mutations.type'
+import { FOLLOW_USER, UNFOLLOW_USER, FETCH_PROFILE, COPY_PROFILE } from '@/store/actions.type'
+import { SET_PROFILE } from '@/store/mutations.type'
 
 const state = {
   user: {
@@ -17,27 +17,27 @@ const getters = {
 }
 
 const actions = {
-  [FETCH_PROFILE] ({commit}, username) {
-    commit(SET_PROFILE, {user: {}, isLoading: true})
+  [FETCH_PROFILE] ({ commit }, username) {
+    commit(SET_PROFILE, { user: {}, isLoading: true })
     return Profile.get(username)
-      .then(({data}) => {
-        commit(SET_PROFILE, {user: data.profile, isLoading: false})
+      .then(({ data }) => {
+        commit(SET_PROFILE, { user: data.profile, isLoading: false })
       })
   },
-  [COPY_PROFILE] ({commit}, user) {
-    commit(SET_PROFILE, {user, isLoading: false})
+  [COPY_PROFILE] ({ commit }, user) {
+    commit(SET_PROFILE, { user, isLoading: false })
   },
-  [FOLLOW_USER] ({commit}, username) {
+  [FOLLOW_USER] ({ commit }, username) {
     return Profile.follow(username)
-      .then(({data}) => {
-        commit(SET_PROFILE, {user: data.profile, isLoading: false})
+      .then(({ data }) => {
+        commit(SET_PROFILE, { user: data.profile, isLoading: false })
         return data.profile
       })
   },
-  [UNFOLLOW_USER] ({commit}, username) {
+  [UNFOLLOW_USER] ({ commit }, username) {
     return Profile.unFollow(username)
-      .then(({data}) => {
-        commit(SET_PROFILE, {user: data.profile, isLoading: false})
+      .then(({ data }) => {
+        commit(SET_PROFILE, { user: data.profile, isLoading: false })
         return data.profile
       })
   }
@@ -45,7 +45,7 @@ const actions = {
 
 const mutations = {
   [SET_PROFILE] (state, payload) {
-    const {user, isLoading} = payload
+    const { user, isLoading } = payload
     state.user = user
     state.isLoading = isLoading
   }

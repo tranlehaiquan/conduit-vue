@@ -38,7 +38,7 @@
 </div>
 </template>
 <script>
-import {UPDATE_PROFILE} from '@/store/actions.type'
+import { UPDATE_PROFILE } from '@/store/actions.type'
 import TheError from '@/components/TheError'
 export default {
   components: {
@@ -62,16 +62,16 @@ export default {
     }
   },
   created () {
-    const {image, username, bio, email} = this.currentUser
-    Object.assign(this.user, {image, username, bio, email})
+    const { image, username, bio, email } = this.currentUser
+    Object.assign(this.user, { image, username, bio, email })
   },
   methods: {
     updateProfile () {
       this.$store.dispatch(UPDATE_PROFILE, this.user)
         .then(() => {
-          this.$router.push({name: 'Home'})
+          this.$router.push({ name: 'Home' })
         })
-        .catch(({response}) => {
+        .catch(({ response }) => {
           this.errors = response.data.errors
         })
     }

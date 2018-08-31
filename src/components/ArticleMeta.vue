@@ -65,7 +65,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   SET_AUTHOR_ARTICLE } from '@/store/actions.type'
-import {mapActions, mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import TheButton from '@/components/TheButton'
 export default {
   components: {
@@ -117,7 +117,7 @@ export default {
     },
     async deleteArticle () {
       await this.deleteArticle(this.article.slug)
-      this.$router.push({name: 'Home'})
+      this.$router.push({ name: 'Home' })
     },
     async toggleFollow () {
       const action = this.article.author.following ? this.unfollowUser : this.followUser
@@ -135,7 +135,7 @@ export default {
       this.loadingFavorite = false
     },
     pushToLoginScreen () {
-      this.$router.push({name: 'SignIn'})
+      this.$router.push({ name: 'SignIn' })
     }
   }
 }

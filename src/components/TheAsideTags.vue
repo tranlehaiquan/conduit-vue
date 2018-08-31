@@ -21,7 +21,7 @@
 
 <script>
 import ThePlaceHolder from '@/components/ThePlaceHolder'
-import {FETCH_TAGS} from '@/store/actions.type'
+import { FETCH_TAGS } from '@/store/actions.type'
 export default {
   async created () {
     this.loading = true

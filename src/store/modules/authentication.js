@@ -1,5 +1,5 @@
 import ApiService, { Auth } from '@/api'
-import {getJWTFromStorage, removeJWTFromStorage, saveJWTToStorage} from '@/api/localStorage'
+import { getJWTFromStorage, removeJWTFromStorage, saveJWTToStorage } from '@/api/localStorage'
 import {
   REGISTER_ACCOUNT,
   LOGIN_ACCOUNT,
@@ -29,27 +29,27 @@ const state = {
 }
 
 const actions = {
-  [REGISTER_ACCOUNT] ({commit}, user) {
+  [REGISTER_ACCOUNT] ({ commit }, user) {
   },
-  [LOGIN_ACCOUNT] ({commit}, user) {
+  [LOGIN_ACCOUNT] ({ commit }, user) {
     return Auth.login(user)
-      .then(({data}) => {
+      .then(({ data }) => {
         commit(SET_ACCOUNT, data.user)
         saveJWTToStorage(data.user.token)
         ApiService.setHeader()
       })
   },
-  [LOGOUT_ACCOUNT] ({commit}) {
+  [LOGOUT_ACCOUNT] ({ commit }) {
     removeJWTFromStorage()
     ApiService.setHeader()
     commit(REMOVE_ACCOUNT)
   },
-  [CHECK_AUTH] ({commit}) {
+  [CHECK_AUTH] ({ commit }) {
     return new Promise((resolve, reject) => {
       if (!getJWTFromStorage()) return resolve()
       ApiService.setHeader()
       Auth.get()
-        .then(({data}) => {
+        .then(({ data }) => {
           commit(SET_ACCOUNT, {
             ...data.user
           })
@@ -57,25 +57,25 @@ const actions = {
         })
     })
   },
-  [REGISTER_ACCOUNT] ({commit}, user) {
+  [REGISTER_ACCOUNT] ({ commit }, user) {
     return new Promise((resolve, reject) => {
       Auth.register(user)
-        .then(({data}) => {
+        .then(({ data }) => {
           commit(SET_ACCOUNT, data.user)
           saveJWTToStorage(data.user.token)
           ApiService.setHeader()
           resolve()
         })
-        .catch(({response}) => {
+        .catch(({ response }) => {
           commit(SET_ERROR, response.data.errors)
         })
     })
   },
-  [UPDATE_PROFILE] ({commit, state}, user) {
-    let {email, username, password, image, bio} = user
+  [UPDATE_PROFILE] ({ commit, state }, user) {
+    let { email, username, password, image, bio } = user
     if (!password) password = state.user.password
-    return Auth.updateProfile({email, username, password, image, bio})
-      .then(({data}) => {
+    return Auth.updateProfile({ email, username, password, image, bio })
+      .then(({ data }) => {
         commit(SET_ACCOUNT, data.user)
       })
   }

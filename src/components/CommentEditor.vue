@@ -15,7 +15,7 @@
   </form>
 </template>
 <script>
-import {ADD_COMMENT} from '@/store/actions.type'
+import { ADD_COMMENT } from '@/store/actions.type'
 export default {
   props: {
     slug: {
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     addComment () {
-      const {slug, comment} = this
+      const { slug, comment } = this
       this.$store.dispatch(ADD_COMMENT, {
         slug,
         comment

@@ -44,81 +44,81 @@ const state = {
 }
 
 const actions = {
-  [FETCH_ARTICLE] ({commit}, slug) {
+  [FETCH_ARTICLE] ({ commit }, slug) {
     commit(START_LOAD_ARTICLE)
     return Article.get(slug)
-      .then(({data}) => {
+      .then(({ data }) => {
         commit(END_LOAD_ARTICLE, data.article)
       })
   },
-  async [FAVORITE_ARTICLE] ({commit}, slug) {
+  async [FAVORITE_ARTICLE] ({ commit }, slug) {
     try {
-      const {data} = await Article.favorite(slug)
-      commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
+      const { data } = await Article.favorite(slug)
+      commit(UPDATE_LIST_ARTICLE, data.article, { root: true })
       commit(SET_ARTICLE, data.article)
     } catch (errors) {
       return Promise.reject(errors)
     }
   },
-  async [UNFAVORITE_ARTICLE] ({commit}, slug) {
+  async [UNFAVORITE_ARTICLE] ({ commit }, slug) {
     try {
-      const {data} = await Article.unFavorite(slug)
-      commit(UPDATE_LIST_ARTICLE, data.article, {root: true})
+      const { data } = await Article.unFavorite(slug)
+      commit(UPDATE_LIST_ARTICLE, data.article, { root: true })
       commit(SET_ARTICLE, data.article)
     } catch (errors) {
       return Promise.reject(errors)
     }
   },
-  [FETCH_COMMENT] ({commit}, slug) {
-    commit(UPDATE_COMMENT, {data: [], isLoading: true})
+  [FETCH_COMMENT] ({ commit }, slug) {
+    commit(UPDATE_COMMENT, { data: [], isLoading: true })
     Article.getComment(slug)
-      .then(({data}) => {
+      .then(({ data }) => {
         commit(UPDATE_COMMENT, {
           data: data.comments,
           isLoading: false
         })
       })
-      .catch(({response}) => {
+      .catch(({ response }) => {
       })
   },
-  [ADD_COMMENT] ({commit, state}, payload) {
-    const {slug, comment} = payload
+  [ADD_COMMENT] ({ commit, state }, payload) {
+    const { slug, comment } = payload
     Article.addComment(slug, comment)
-      .then(({data}) => {
+      .then(({ data }) => {
         state.comments.data.unshift(data.comment)
         commit(UPDATE_COMMENT, {
           data: state.comments.data,
           isLoading: false
         })
       })
-      .catch(({response}) => {
+      .catch(({ response }) => {
       })
   },
-  [REMOVE_COMMENT] ({commit, state}, payload) {
-    const {slug, id} = payload
+  [REMOVE_COMMENT] ({ commit, state }, payload) {
+    const { slug, id } = payload
     Article.removeComment(slug, id)
-      .then(({data}) => {
+      .then(({ data }) => {
         const comments = state.comments.data.filter((comment) => comment.id !== id)
         commit(UPDATE_COMMENT, {
           data: comments,
           isLoading: false
         })
       })
-      .catch(({response}) => {
+      .catch(({ response }) => {
       })
   },
-  [DELETE_ARTICLE] ({commit}, slug) {
+  [DELETE_ARTICLE] ({ commit }, slug) {
     return Article.deleteArticle(slug)
   },
-  [UPDATE_ARTICLE] ({commit}, payload) {
-    const {slug, article} = payload
+  [UPDATE_ARTICLE] ({ commit }, payload) {
+    const { slug, article } = payload
     return Article.updateArticle(slug, article)
   },
-  [CREATE_ARTICLE] ({commit}, article) {
+  [CREATE_ARTICLE] ({ commit }, article) {
     return Article.createArticle(article)
   },
-  [SET_AUTHOR_ARTICLE] ({commit, state}, author) {
-    const article = Object.assign({}, state.article.data, {author})
+  [SET_AUTHOR_ARTICLE] ({ commit, state }, author) {
+    const article = Object.assign({}, state.article.data, { author })
     commit(SET_ARTICLE, article)
   }
 }

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import {getJWTFromStorage} from '@/api/localStorage'
+import { getJWTFromStorage } from '@/api/localStorage'
 import { API_URL } from '@/api/config'
 
 // Source code from https://github.com/gothinkster/vue-realworld-example-app
@@ -22,7 +22,7 @@ const ApiService = {
 
   query (resource, params) {
     return Vue.axios
-      .get(resource, {params})
+      .get(resource, { params })
       .catch((error) => {
         throw new Error(`[RWV] ApiService ${error}`)
       })
@@ -90,7 +90,7 @@ export const Article = {
   },
   addComment (slug, comment) {
     return ApiService.post(`articles/${slug}/comments`, {
-      comment: {body: comment}
+      comment: { body: comment }
     })
   },
   removeComment (slug, id) {
@@ -100,10 +100,10 @@ export const Article = {
     return ApiService.delete(`articles/${slug}`)
   },
   updateArticle (slug, article) {
-    return ApiService.put(`articles/${slug}`, {article})
+    return ApiService.put(`articles/${slug}`, { article })
   },
   createArticle (article) {
-    return ApiService.post('articles', {article})
+    return ApiService.post('articles', { article })
   }
 }
 
@@ -121,7 +121,7 @@ export const Auth = {
     return ApiService.put('user', user)
   },
   updateProfile (user) {
-    return ApiService.put('user', {user})
+    return ApiService.put('user', { user })
   }
 }
 

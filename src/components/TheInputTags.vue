@@ -66,7 +66,7 @@ export default {
     },
     add () {
       const newTags = this.tags.slice()
-      newTags.push({content: this.input, key: Date.now() + this.input})
+      newTags.push({ content: this.input, key: Date.now() + this.input })
       this.$emit('change', newTags)
       this.input = ''
     },

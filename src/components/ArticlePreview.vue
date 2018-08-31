@@ -36,8 +36,8 @@
   </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
-import {FAVORITE_ARTICLE, UNFAVORITE_ARTICLE} from '@/store/actions.type'
+import { mapActions } from 'vuex'
+import { FAVORITE_ARTICLE, UNFAVORITE_ARTICLE } from '@/store/actions.type'
 import ThePlaceHolder from '@/components/ThePlaceHolder'
 import TheButton from '@/components/TheButton'
 export default {
@@ -68,7 +68,7 @@ export default {
   methods: {
     async toggleFavorite () {
       if (!this.$store.state.authentication.isLogin) {
-        this.$router.push({name: 'SignIn'})
+        this.$router.push({ name: 'SignIn' })
         return
       }
       this.favoriteLoading = true

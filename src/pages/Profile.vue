@@ -60,7 +60,7 @@
 </div>
 </template>
 <script>
-import {FOLLOW_USER, UNFOLLOW_USER, FETCH_PROFILE, COPY_PROFILE} from '@/store/actions.type'
+import { FOLLOW_USER, UNFOLLOW_USER, FETCH_PROFILE, COPY_PROFILE } from '@/store/actions.type'
 import store from '@/store'
 export default {
   props: {
@@ -90,8 +90,8 @@ export default {
   beforeRouteEnter (to, from, next) {
     const currentUsername = store.state.authentication.user.username
     if (currentUsername === to.params.username) {
-      const {username, bio, image} = store.state.authentication.user
-      const user = {username, bio, image, following: false}
+      const { username, bio, image } = store.state.authentication.user
+      const user = { username, bio, image, following: false }
       store.dispatch(COPY_PROFILE, user)
     } else {
       store.dispatch(FETCH_PROFILE, to.params.username)
@@ -105,8 +105,8 @@ export default {
     }
     const currentUsername = store.state.authentication.user.username
     if (currentUsername === to.params.username) {
-      const {username, bio, image} = store.state.authentication.user
-      const user = {username, bio, image, following: false}
+      const { username, bio, image } = store.state.authentication.user
+      const user = { username, bio, image, following: false }
       store.dispatch(COPY_PROFILE, user)
     } else {
       store.dispatch(FETCH_PROFILE, to.params.username)

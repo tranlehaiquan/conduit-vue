@@ -57,11 +57,11 @@
 </div>
 </template>
 <script>
-import {mapActions, mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import TheInputTags from '@/components/TheInputTags'
 import TheButton from '@/components/TheButton'
 import store from '@/store'
-import {UPDATE_ARTICLE, CREATE_ARTICLE, FETCH_ARTICLE} from '@/store/actions.type'
+import { UPDATE_ARTICLE, CREATE_ARTICLE, FETCH_ARTICLE } from '@/store/actions.type'
 import TheError from '@/components/TheError'
 export default {
   components: {
@@ -86,11 +86,11 @@ export default {
     }
   },
   async beforeRouteUpdate (to, from, next) {
-    const {slug} = to.params
+    const { slug } = to.params
     if (slug) {
       await store.dispatch('FETCH_ARTICLE', slug)
 
-      const {title, description, body, tagList} = store.state.article.article.data
+      const { title, description, body, tagList } = store.state.article.article.data
       this.title = title
       this.description = description
       this.body = body
@@ -125,32 +125,32 @@ export default {
       this.loading = false
     },
     async submitArticle () {
-      const {title, description, body} = this
+      const { title, description, body } = this
       const tagList = this.tagList.map((tag) => tag.content)
 
-      let {slug} = this.$route.params
+      let { slug } = this.$route.params
       let article
       try {
         if (slug) {
-          article = await this.updateArticle({slug, article: {title, description, body, tagList}})
+          article = await this.updateArticle({ slug, article: { title, description, body, tagList } })
         } else {
-          article = await this.createArticle({title, description, body, tagList})
+          article = await this.createArticle({ title, description, body, tagList })
         }
 
-        this.$router.push({name: 'Article', params: {slug: article.data.article.slug}})
-      } catch ({response}) {
+        this.$router.push({ name: 'Article', params: { slug: article.data.article.slug } })
+      } catch ({ response }) {
         this.errors = response.data.errors
       }
     }
   },
   async created () {
-    const {slug} = this
+    const { slug } = this
     if (slug) {
       if (this.article.slug !== slug) {
         await this.fetchArticle(slug)
       }
 
-      const {title, description, body, tagList} = this.article
+      const { title, description, body, tagList } = this.article
       this.title = title
       this.description = description
       this.body = body

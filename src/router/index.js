@@ -22,9 +22,9 @@ export default new Router({
       path: '/',
       component: Home,
       children: [
-        {path: '/', component: HomeGlobal, name: 'Home'},
-        {path: 'feed', component: HomeFeed, meta: { requiresAuth: true }},
-        {path: 'tag/:tag', component: HomeTag, props: true}
+        { path: '/', component: HomeGlobal, name: 'Home' },
+        { path: 'feed', component: HomeFeed, meta: { requiresAuth: true } },
+        { path: 'tag/:tag', component: HomeTag, props: true }
       ]
     },
     {
@@ -61,8 +61,8 @@ export default new Router({
       component: Profile,
       props: true,
       children: [
-        {path: '', component: ProfileArticles, name: 'ProfileArticles'},
-        {path: 'favorites', component: ProfileFavorited, name: 'ProfileFavorited'}
+        { path: '', component: ProfileArticles, name: 'ProfileArticles' },
+        { path: 'favorites', component: ProfileFavorited, name: 'ProfileFavorited' }
       ]
     }
   ]

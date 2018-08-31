@@ -34,8 +34,8 @@
 </div>
 </template>
 <script>
-import {REGISTER_ACCOUNT, LOGOUT_ACCOUNT} from '@/store/actions.type.js'
-import {mapState} from 'vuex'
+import { REGISTER_ACCOUNT, LOGOUT_ACCOUNT } from '@/store/actions.type.js'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -51,10 +51,10 @@ export default {
   },
   methods: {
     register () {
-      const {username, email, password} = this
-      this.$store.dispatch(REGISTER_ACCOUNT, {user: {username, email, password}})
+      const { username, email, password } = this
+      this.$store.dispatch(REGISTER_ACCOUNT, { user: { username, email, password } })
         .then(() => {
-          this.$router.push({name: 'Home'})
+          this.$router.push({ name: 'Home' })
         })
     },
     logout () {

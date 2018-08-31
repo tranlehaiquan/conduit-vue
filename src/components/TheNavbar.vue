@@ -41,7 +41,7 @@
   </nav>
 </template>
 <script>
-import {mapState, mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapState({
@@ -55,7 +55,7 @@ export default {
     }),
     doLogout () {
       this.logout()
-      if (this.$route.path !== '/') this.$router.push({name: 'Home'})
+      if (this.$route.path !== '/') this.$router.push({ name: 'Home' })
     }
   }
 }

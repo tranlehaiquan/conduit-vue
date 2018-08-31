@@ -37,19 +37,19 @@ const state = {
 }
 
 const actions = {
-  async [FETCH_TAGS] ({commit}) {
-    const {data} = await TagsService.get()
+  async [FETCH_TAGS] ({ commit }) {
+    const { data } = await TagsService.get()
     commit(SET_TAGS, data.tags)
   },
-  async [FETCH_ARTICLES] ({commit}, params) {
-    const {data} = await HomeArticles.get(params)
-    const {articles, articlesCount} = data
-    commit(SET_ARTICLES, {articles, articlesCount})
+  async [FETCH_ARTICLES] ({ commit }, params) {
+    const { data } = await HomeArticles.get(params)
+    const { articles, articlesCount } = data
+    commit(SET_ARTICLES, { articles, articlesCount })
   },
-  async [FETCH_FEED_ARTICLES] ({commit}, params) {
-    const {data} = await HomeArticles.getFeed(params)
-    const {articles, articlesCount} = data
-    commit(SET_ARTICLES, {articles, articlesCount})
+  async [FETCH_FEED_ARTICLES] ({ commit }, params) {
+    const { data } = await HomeArticles.getFeed(params)
+    const { articles, articlesCount } = data
+    commit(SET_ARTICLES, { articles, articlesCount })
   }
 }
 
@@ -61,7 +61,7 @@ const mutations = {
     }
   },
   [SET_ARTICLES] (state, payload) {
-    const {articles, articlesCount} = payload
+    const { articles, articlesCount } = payload
     state.articles = {
       data: articles,
       articlesCount,
@@ -72,8 +72,8 @@ const mutations = {
     state.articles.data = state.articles.data.map((articleIndex) => {
       if (articleIndex.slug !== article.slug) return articleIndex
 
-      const {favorited, favoritesCount} = article
-      return Object.assign({}, articleIndex, {favorited, favoritesCount})
+      const { favorited, favoritesCount } = article
+      return Object.assign({}, articleIndex, { favorited, favoritesCount })
     })
   }
 }

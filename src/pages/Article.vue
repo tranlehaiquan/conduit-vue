@@ -62,8 +62,8 @@
   </div>
 </template>
 <script>
-import {mapState, mapActions} from 'vuex'
-import {FETCH_ARTICLE, FETCH_COMMENT} from '@/store/actions.type'
+import { mapState, mapActions } from 'vuex'
+import { FETCH_ARTICLE, FETCH_COMMENT } from '@/store/actions.type'
 import ArticleMeta from '@/components/ArticleMeta'
 import CommentEditor from '@/components/CommentEditor'
 import ListComment from '@/components/ListComment'

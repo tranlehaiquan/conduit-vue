@@ -40,8 +40,8 @@
   </div>
 </template>
 <script>
-import {LOGIN_ACCOUNT, LOGOUT_ACCOUNT} from '@/store/actions.type.js'
-import {mapActions} from 'vuex'
+import { LOGIN_ACCOUNT, LOGOUT_ACCOUNT } from '@/store/actions.type.js'
+import { mapActions } from 'vuex'
 import TheError from '@/components/TheError'
 import TheButton from '@/components/TheButton'
 export default {
@@ -63,14 +63,14 @@ export default {
       logoutAccount: LOGOUT_ACCOUNT
     }),
     async login () {
-      const {email, password} = this
+      const { email, password } = this
       this.loading = true
       try {
-        await this.loginAccount({user: {email, password}})
-        const {redirect} = this.$route.query
-        if (redirect) this.$router.push({path: redirect})
-        else this.$router.push({name: 'Home'})
-      } catch ({response}) {
+        await this.loginAccount({ user: { email, password } })
+        const { redirect } = this.$route.query
+        if (redirect) this.$router.push({ path: redirect })
+        else this.$router.push({ name: 'Home' })
+      } catch ({ response }) {
         this.errors = response.data.errors
       }
       this.loading = false
