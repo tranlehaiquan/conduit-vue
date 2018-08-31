@@ -2,16 +2,16 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Article from '@/pages/Article'
-import EditorArticle from '@/pages/EditorArticle'
-import Profile from '@/pages/Profile'
-import Setting from '@/pages/Setting'
-import SignIn from '@/pages/SignIn'
 import SignUp from '@/pages/SignUp'
 import HomeFeed from '@/pages/HomeFeed'
 import HomeTag from '@/pages/HomeTag'
 import HomeGlobal from '@/pages/HomeGlobal'
 import ProfileArticles from '@/pages/ProfileArticles'
 import ProfileFavorited from '@/pages/ProfileFavorited'
+import SignIn from '@/pages/SignIn'
+const Profile = import('@/pages/Profile')
+const Setting = import('@/pages/Setting')
+const EditorArticle = import('@/pages/EditorArticle')
 
 Vue.use(Router)
 
@@ -36,7 +36,7 @@ export default new Router({
     {
       path: '/editor/:slug?',
       name: 'EditorArticle',
-      component: EditorArticle,
+      component: () => EditorArticle,
       props: true,
       meta: { requiresAuth: true }
     },
@@ -53,12 +53,12 @@ export default new Router({
     {
       path: '/setting',
       name: 'Setting',
-      component: Setting,
+      component: () => Setting,
       meta: { requiresAuth: true }
     },
     {
       path: '/profile/:username',
-      component: Profile,
+      component: () => Profile,
       props: true,
       children: [
         { path: '', component: ProfileArticles, name: 'ProfileArticles' },
