@@ -1,7 +1,9 @@
 # conduit-vue
 
-Vuejs spa real world example (CRUD, auth) use [RealWorld](https://github.com/gothinkster/realworld) spec API
+Vuejs spa real world example (CRUD, auth) use [RealWorld](https://github.com/gothinkster/realworld/tree/master/api) spec API
 Live demo: [https://vue-pet-projecet.netlify.com/](https://vue-pet-projecet.netlify.com/)
+
+Just love vuejs and what it give to developer. Hope some day, I make real project with vuejs : )).
 
 ## Project setup
 ```
