@@ -24,8 +24,14 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-store.dispatch('CHECK_AUTH')
-  .then(() => {
+// Use Promise race to make sure
+// If Check auth get to long than 500 ms
+// Generate Vue instance
+// Just avoid blank page
+Promise.race([
+  store.dispatch('CHECK_AUTH'),
+  new Promise((rs, rj) => setTimeout(rs, 500))
+]).then(() => {
     /* eslint-disable no-new */
     new Vue({
       store,
