@@ -29,13 +29,12 @@ router.beforeEach((to, from, next) => {
 // Generate Vue instance
 // Just avoid blank page
 Promise.race([
-  store.dispatch('CHECK_AUTH'),
-  new Promise((rs, rj) => setTimeout(rs, 500))
+  store.dispatch('CHECK_AUTH')
 ]).then(() => {
-    /* eslint-disable no-new */
-    new Vue({
-      store,
-      router,
-      render: h => h(App)
-    }).$mount('#app')
-  })
+  /* eslint-disable no-new */
+  new Vue({
+    store,
+    router,
+    render: h => h(App)
+  }).$mount('#app')
+})
